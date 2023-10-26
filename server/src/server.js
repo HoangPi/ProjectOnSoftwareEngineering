@@ -1,6 +1,5 @@
 const express = require('express')
 const bodyParser = require('body-parser');
-const User = require("./models/user.js")
 const addPost = require("./routes/addPost.js")
 const getAllPosts = require("./routes/getAllPosts.js")
 const delete1 = require('./routes/deletepost.js')
