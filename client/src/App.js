@@ -7,27 +7,30 @@ import React, { useEffect, useState } from 'react'
 import { InputPost } from './components/NewPost';
 import { PostContent } from './components/PostContent.js';
 import * as api from './api/apiColections.js'
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import { Homepage } from './pages/homepage';
+import { Signup } from './pages/signup';
 
 function App() {
   const [posts, setPosts] = useState([{}])
   const [content, setContent] = useState('')
   const PostBackgroundColor = ['#E5E4DA','#BFB0B3']
 
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    fetch('/getall', {
-      method: 'POST'
-    }).then(
-      response => response.json()
-    ).then(
-      data => {
-        setPosts(data.posts)
-        console.log(data.posts)
-        setLoading(false)
-      }
-    ).then(() => setLoading(false))
-  }, [])
+  // useEffect(() => {
+  //   fetch('/getall', {
+  //     method: 'POST'
+  //   }).then(
+  //     response => response.json()
+  //   ).then(
+  //     data => {
+  //       setPosts(data.posts)
+  //       console.log(data.posts)
+  //       setLoading(false)
+  //     }
+  //   ).then(() => setLoading(false))
+  // }, [])
 
   const sendData = async (event) =>{
     let newPosts = await api.sendPost(event,content)
@@ -47,14 +50,20 @@ function App() {
 
   return (
     <div className="App">
-      <NavigationBar></NavigationBar>
-      <InputPost updatePost={setContent} post={content}  sendCommand={sendData}></InputPost>
+      {/* <NavigationBar></NavigationBar> */}
+      <Router>
+        <Routes>
+          <Route path='/' element={<Homepage/>}/>
+          <Route path='/signup' element={<Signup/>}/>
+        </Routes>
+      </Router>
+      {/* <InputPost updatePost={setContent} post={content}  sendCommand={sendData}></InputPost>
       {posts.map((value,key) => {
         var c = PostBackgroundColor[key&1]
         return (
           <PostContent color = {PostBackgroundColor[key%2]} addComment = {addComment} deleteCommand={deletePost} id={value.id} comment={value.comment} content={value.content}></PostContent>
         )
-      })}
+      })} */}
     </div>
   );
 }
