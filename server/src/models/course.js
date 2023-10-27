@@ -2,20 +2,21 @@ const mongoose = require("mongoose");
 // const Schema = mongoose.Schema();
 
 const courseSchema= mongoose.Schema({
-    ID:{
-        type: String,
-        required: true,
-    },
+    description: String,
     name:{
         type: String,
         required: true,
     },
-    credit:{
-        type:Int8Array,
+    content:{
+        type: Object,
         required: true,
     },
-    type:{
-        type: Int8Array,
+    category:{
+        type: [],
+        required: true,
+    },
+    lecturerID:{
+        type: String,
         required: true,
     }
 },{timestamps: true});

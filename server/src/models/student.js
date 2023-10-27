@@ -2,24 +2,12 @@ const mongoose = require("mongoose");
 // const Schema = mongoose.Schema();
 
 const studentSchema = mongoose.Schema({
-    ID:{
+    name:{
         type: String,
-        require: true,
+        required: true,
     },
-    fullname:{
-        type: String,
-        require: true,
-    },
-    gender:{
-        type: String,
-        require: true,
-    },
-    dob:{
-        type: Date,
-        require: true,
-    },
-    classID:{
-        type: String,
+    courseID:{
+        type: [],
         required: true,
     }
 })
