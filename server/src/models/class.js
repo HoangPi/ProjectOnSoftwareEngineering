@@ -6,11 +6,7 @@ const classSchema= mongoose.Schema({
         type: String,
         required: true,
     },
-    fullname:{
-        type: String,
-        required: true,
-    },
-    iID:{
+    instructorID:{
         type: String,
         required: true,
     },
