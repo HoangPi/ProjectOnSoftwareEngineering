@@ -1,4 +1,4 @@
-import './App.css';
+// import './App.css';
 import { } from "./components/User.js"
 import { NavigationBar } from "./components/NavBar.js"
 import { Post } from "./components/Post.js"

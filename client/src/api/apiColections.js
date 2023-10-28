@@ -62,3 +62,21 @@ export const addComment = async (event, id, comment) =>{
 
     }
 }
+export const SingupForStudent = async(event,username, password, role, recoveremail, name) =>{
+  event.preventDefault();
+  try{
+    // console.log("COMENT"+id)
+    const response = await fetch('/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({username, password, role, recoveremail, name})
+    });
+    const data = await response.json();
+    return data.posts
+  }
+  catch(err){
+
+  }
+}
