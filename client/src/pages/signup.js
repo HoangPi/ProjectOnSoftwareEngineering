@@ -1,8 +1,10 @@
 import { useState } from "react";
+import * as api from "../api/apiColections.js"
 export const Signup = () => {
     const [username, setUsername] = useState('');
-    const [passwrod1, setPassword1] = useState('');
-    const [Passwrod2, setPassword2] = useState('');
+    const [password1, setPassword1] = useState('');
+    const [password2, setPassword2] = useState('');
+    const [fullname, setFullname] = useState('');
     const [email, setEmail] = useState('');
     const [role, setRole] = useState(1);
     const [certifications, setCertifications] = useState([]);
@@ -16,6 +18,12 @@ export const Signup = () => {
     }
     const handlePassword2OnChange = (ev) => {
         setPassword2(ev.target.value);
+    }
+    const handelEmailOnChange = (ev) =>{
+        setEmail(ev.target.value)
+    }
+    const handleNameOnChange = (ev) =>{
+        setFullname(ev.target.value)
     }
     const roleOnClick = (ev) => {
         // console.log(ev.target.value);
@@ -37,6 +45,22 @@ export const Signup = () => {
 
         setCertifications([...certifications.slice(0, temp), ...certifications.slice(temp + 1)])
     }
+    const sendInfo = (ev)=>{
+        if(password1!==password2){
+            alert("Passwords Must Be The Same and Non-empty");
+            return;
+        }
+        if(username===''
+        || password1===''
+        || password2===''
+        || email === ''
+        || fullname === ''){
+            alert("Please Fill All The Fields");
+            return;
+        }
+        role===1 && api.SignupForUser(ev,username,password1,role,email,fullname);
+        role===2 && api.SignupForLecturer(ev,username,password1,role,email,fullname,certifications)
+    }
     return (
         <div>
             <div class="form-floating mb-3">
@@ -52,11 +76,11 @@ export const Signup = () => {
                 <label for="floatingPassword">Retype Password</label>
             </div>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingPassword3" placeholder="Your Name" />
+                <input type="text" class="form-control" id="floatingPassword3" placeholder="Your Name" onChange={handleNameOnChange}/>
                 <label for="floatingPassword">Your Name</label>
             </div>
             <div class="input-group mb-3">
-                <input type="email" class="form-control" id="floatingInput4" placeholder="Email" />
+                <input type="email" class="form-control" id="floatingInput4" placeholder="Email" onChange={handelEmailOnChange}/>
                 <button class="btn btn-outline-secondary" type="button" id="button-addon2">Send OTP</button>
             </div>
             <div class="form-check">
@@ -72,7 +96,7 @@ export const Signup = () => {
                 </label>
             </div>
             {
-                role === 1 && (
+                role === 2 && (
                     <>
                         {certifications.map((value, key) =>
                             <div class="input-group mb-3">
@@ -95,7 +119,7 @@ export const Signup = () => {
                     </>
                 )
             }
-            <button type="button" class="btn btn-primary btn-lg">Submit</button>
+            <button type="button" class="btn btn-primary btn-lg" onClick={sendInfo}>Submit</button>
         </div>
     )
 }
