@@ -2,19 +2,15 @@ const mongoose = require("mongoose");
 // const Schema = mongoose.Schema();
 
 const lecturerSchema= mongoose.Schema({
-    name:{
+    fullname:{
         type: String,
         required: true,
     },
-    email:{
-        type:String,
-        required: true,
-    },
-    qualification:{
+    certifications:{
         type: [],
         required: true,
     }
 },{timestamps: true});
 
-const Lecturer = mongoose.model('instructor',lecturerSchema);
+const Lecturer = mongoose.model('lecturer',lecturerSchema);
 module.exports = Lecturer;

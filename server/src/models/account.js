@@ -11,15 +11,22 @@ const accountSchema= mongoose.Schema({
         required: true,
     },
     role:{
-        type: Int8Array,
+        type: Number,
         required: true,
     },
     active:{
         type: Boolean,
         required: true,
     },
-    recoveremail: String,
+    recoveremail:{
+        type: String,
+        required: true,
+    },
+    userinfo:{
+        type: String,
+        required: true,
+    }
 },{timestamps: true});
 
-const Account = mongoose.model('class',accountSchema);
+const Account = mongoose.model('account',accountSchema);
 module.exports = Account;
