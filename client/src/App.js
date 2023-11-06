@@ -1,11 +1,6 @@
 // import './App.css';
 import { } from "./components/User.js"
-import { NavigationBar } from "./components/NavBar.js"
-import { Post } from "./components/Post.js"
-import { Post as listOfPosts } from "./model/posts.js"
 import React, { useEffect, useState } from 'react'
-import { InputPost } from './components/NewPost';
-import { PostContent } from './components/PostContent.js';
 import * as api from './api/apiColections.js'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import { Homepage } from './pages/homepage';
