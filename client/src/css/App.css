@@ -36,3 +36,36 @@
     transform: rotate(360deg);
   }
 }
+.sidebar{
+  width: 250px;
+  top:0px;
+  left:0px;
+  bottom:0px;
+}
+
+.sidebar .logo{
+  padding:20px 25px;
+}
+.sidebar .logo img{
+  height: 200px;
+}
+
+.sidebar .nav{
+  padding:10px 35px;
+}
+.sidebar .nav li{}
+.sidebar .nav li a{
+  align-items:self-start;
+  padding: 0px 20px;
+  margin-top: 20px;
+}
+.sidebar .nav li a .ico{
+  margin-right: 10px;
+}
+.sidebar .nav li a .lbl{}
+
+.sidebar .nav li a.on {
+  border-left: 2px #9f662d solid;
+  color: #fbbb61;
+  line-height: 1;
+}

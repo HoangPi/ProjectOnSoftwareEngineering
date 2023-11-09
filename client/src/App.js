@@ -1,4 +1,7 @@
-// import './App.css';
+import './css/App.css';
+import './css/props.css';
+import './css/uifonts.css';
+
 import { } from "./components/User.js"
 import { NavigationBar } from "./components/NavBar.js"
 import { Post } from "./components/Post.js"
@@ -11,6 +14,9 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import { Homepage } from './pages/homepage';
 import { Signup } from './pages/signup';
 
+
+import Header from './components/header.js';
+import Sidebar from './components/sidebar.js';
 function App() {
   const [posts, setPosts] = useState([{}])
   const [content, setContent] = useState('')
@@ -49,8 +55,9 @@ function App() {
   if (loading) return <h1>Loading...</h1>
 
   return (
-    <div className="App">
-      {/* <NavigationBar></NavigationBar> */}
+    <div className="App flex">
+      <Header/>
+      <Sidebar/>
       <Router>
         <Routes>
           <Route path='/' element={<Homepage/>}/>
