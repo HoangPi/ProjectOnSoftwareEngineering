@@ -11,7 +11,7 @@ import { InputPost } from './components/NewPost';
 import { PostContent } from './components/PostContent.js';
 import * as api from './api/apiColections.js'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import { Homepage } from './pages/homepage';
+import Homepage  from './pages/homepage';
 import { Signup } from './pages/signup';
 
 
@@ -58,12 +58,15 @@ function App() {
     <div className="App flex">
       <Header/>
       <Sidebar/>
+      <div className='app-content'>
       <Router>
         <Routes>
           <Route path='/' element={<Homepage/>}/>
           <Route path='/signup' element={<Signup/>}/>
         </Routes>
       </Router>
+      </div>
+      
       {/* <InputPost updatePost={setContent} post={content}  sendCommand={sendData}></InputPost>
       {posts.map((value,key) => {
         var c = PostBackgroundColor[key&1]

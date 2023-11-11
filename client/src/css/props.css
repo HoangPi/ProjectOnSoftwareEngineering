@@ -14,12 +14,25 @@ h1,h2,h3,h4,h5,h6 {
 
 .flex{display: flex;}
 .fixed{position: fixed;}
+.abs{position: absolute;}
+.rel{position: relative;}
 
 .noul{text-decoration: none;}
 
 .bl{display:block;}
 
+.alc{align-items: center;}
+.jlc{justify-content: center;}
+
 .c33{color: #333;}
+.c77{color: #777;}
+.cff{color:#fff}
+
+.s13{font-size: 13px;}
 .s15{font-size: 15px;}
 .s20{font-size: 20px;}
 .s24{font-size: 24px;}
+
+.fontb{
+    font-weight: bold;
+}

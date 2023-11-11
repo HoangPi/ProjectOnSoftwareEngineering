@@ -38,16 +38,16 @@
 }
 .sidebar{
   width: 250px;
-  top:0px;
-  left:0px;
-  bottom:0px;
+  background-color: #ccc;
 }
 
 .sidebar .logo{
+  align-items: center;
   padding:20px 25px;
 }
 .sidebar .logo img{
-  height: 200px;
+  height: 125px;
+  align-self: center;
 }
 
 .sidebar .nav{
@@ -56,8 +56,8 @@
 .sidebar .nav li{}
 .sidebar .nav li a{
   align-items:self-start;
-  padding: 0px 20px;
-  margin-top: 20px;
+  padding: 5px 10px;
+  margin-bottom: 6px;
 }
 .sidebar .nav li a .ico{
   margin-right: 10px;
@@ -68,4 +68,77 @@
   border-left: 2px #9f662d solid;
   color: #fbbb61;
   line-height: 1;
+}
+
+.sidebar .updated-course{
+  margin-top: 10px;
+  padding: 0px 35px;
+  margin-bottom: 10px 0px;
+}
+.sidebar .updated-course .ico{
+  background-color: #fbbb61;
+  padding: 18px;
+  border-radius: 22px;
+}
+.sidebar .updated-course .lbl{}
+.sidebar .updated-course .lbl .author{}
+
+.sidebar .stats{
+  padding-left: 20px;
+  margin: 20px 0px;
+}
+
+.sidebar .stats .stats-box{
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.sidebar .stats .stats-box .ico{
+  margin-bottom: 5px;
+}
+
+.sidebar .stats .stats-box .val{}
+
+.sidebar .stats .stats-box .lbl{}
+
+.sidebar .user{
+  margin-top: 10px;
+  padding: 0px 35px;
+  margin-bottom: 10px 0px;
+}
+.sidebar .user .photo{
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.sidebar .user .photo img{
+  width: 100%;
+  height: 100%;
+}
+
+.sidebar .user .lbl{}
+
+.sidebar .user .lbl .author{}
+
+.app-content{
+  flex:2;
+  padding: 20px 0px;
+}
+
+/*
+Home page
+*/
+
+.home-page{}
+.home-page .section{}
+.home-page .section .title{}
+.home-page .section .tutors{}
+.home-page .section .tutors .tutor:hover{
+  width: 20px;
+  height: 20px;
 }

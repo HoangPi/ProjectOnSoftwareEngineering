@@ -19,7 +19,7 @@ export const NavigationBar = (props) => {
                             <a class="nav-link active" aria-current="page" href="#">Pricing</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Sign In</a>
+                            <a class="nav-link active" aria-current="page" href="#">Sign in</a>
                         </li>
                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                             <a href="/signup">
