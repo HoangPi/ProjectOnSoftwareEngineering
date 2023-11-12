@@ -17,6 +17,7 @@ import { Signup } from './pages/signup';
 
 import Header from './components/header.js';
 import Sidebar from './components/sidebar.js';
+import Rightbar from './components/rightbar.js';
 function App() {
   const [posts, setPosts] = useState([{}])
   const [content, setContent] = useState('')
@@ -58,6 +59,7 @@ function App() {
     <div className="App flex">
       <Header/>
       <Sidebar/>
+      <Rightbar/>
       <div className='app-content'>
       <Router>
         <Routes>

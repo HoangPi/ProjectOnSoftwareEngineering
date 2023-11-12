@@ -12,6 +12,12 @@ h1,h2,h3,h4,h5,h6 {
     font-weight: normal;
 }
 
+button{
+    outline: none;
+    cursor: pointer;
+}
+
+
 .flex{display: flex;}
 .fixed{position: fixed;}
 .abs{position: absolute;}
@@ -35,4 +41,8 @@ h1,h2,h3,h4,h5,h6 {
 
 .fontb{
     font-weight: bold;
+}
+
+.fontn{
+    font-weight: normal;
 }
