@@ -5,7 +5,7 @@ import logo from "../ui/logo_oacademy.svg";
 
 
 
-function Sidebar(){
+function Sidebar({ sidebarVisible }){
     
 
     const [nav,setNav] = useState([
@@ -31,7 +31,7 @@ function Sidebar(){
     }
 
     return(
-        <div className = "sidebar rel">
+        <div className={`sidebar rel ${sidebarVisible ? "active" : ""}`}>
 
             <a herf="#" className="logo">
                 <img src={logo} className="bl"/>

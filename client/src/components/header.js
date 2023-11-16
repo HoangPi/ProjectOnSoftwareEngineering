@@ -1,12 +1,26 @@
-import React from "react";
-import logo from "../ui/logo_oacademy.svg";
-function Header(){
-    return(
-        <div className = "header fixed">
+import React, { useState } from "react";
+import Sidebar from "./sidebar";
 
+function HeadBar() {
+  const [sidebarVisible, setSidebarVisible] = useState(false);
 
+  const toggleSidebar = () => {
+    setSidebarVisible(!sidebarVisible);
+    const appContent = document.querySelector('.app-content');
+    appContent.style.marginLeft = sidebarVisible ? '0' : '300px';
+  };
 
+  return (
+    <div>
+        <div className="headbar">
+        <button className="open-sidebar-btn" onClick={toggleSidebar}>
+        Open Sidebar
+      </button>
+            <Sidebar sidebarVisible={sidebarVisible} />
         </div>
-    )
+      
+    </div>
+  );
 }
-export default Header;
+
+export default HeadBar;

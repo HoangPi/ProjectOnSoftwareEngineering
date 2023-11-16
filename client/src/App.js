@@ -39,26 +39,12 @@ function App() {
   //   ).then(() => setLoading(false))
   // }, [])
 
-  const sendData = async (event) =>{
-    let newPosts = await api.sendPost(event,content)
-    setPosts(newPosts)
-  }
-  const deletePost = async (event,id)=>{
-    let newPosts = await api.deletePost(event,id)
-    setPosts(newPosts)
-  }
-  const addComment = async (event,id,comment)=>{
-    let newPosts = await api.addComment(event,id,comment)
-    setPosts(newPosts)
-  }
-
 
   if (loading) return <h1>Loading...</h1>
 
   return (
     <div className="App flex">
       <Header/>
-      <Sidebar/>
       <Rightbar/>
       <div className='app-content'>
       <Router>
@@ -68,14 +54,6 @@ function App() {
         </Routes>
       </Router>
       </div>
-      
-      {/* <InputPost updatePost={setContent} post={content}  sendCommand={sendData}></InputPost>
-      {posts.map((value,key) => {
-        var c = PostBackgroundColor[key&1]
-        return (
-          <PostContent color = {PostBackgroundColor[key%2]} addComment = {addComment} deleteCommand={deletePost} id={value.id} comment={value.comment} content={value.content}></PostContent>
-        )
-      })} */}
     </div>
   );
 }
