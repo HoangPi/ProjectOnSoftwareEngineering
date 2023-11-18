@@ -183,7 +183,39 @@ function signIn(req,res){
             res.status(405).json({signin:false})
         })
 }
+function updateProfile(req,res){
+    // console.log(req.session)
+    if(typeof(req.session.userinfo)==='undefined' || req.session.userinfo===null){
+        res.json({confirm:false})
+    }
+    else{
+        if(req.body.role==='student'){
+            User.findOneAndUpdate({accountid:req.body.accountid},{
+                name:req.body.name,
+                avatar: req.body.file,
+            }).then((result)=>{
+                req.session.userinfo=result._doc
+                // console.log(result)
+                res.status(200).json({message:"Test"})
+            })
+        }
+        else{
+            Tutor.findOneAndUpdate({accountid:req.body.accountid},{
+                name:req.body.name,
+                avatar: req.body.file,
+                titles:req.body.titles,
+            },{returnOriginal:false}).then((result=>{
+                req.session.userinfo=result._doc
+                // console.log(result)
+                res.status(200).json({message:"User modified"})
+            }))
+        }
+    }
+
+    // res.status(200).json({message:"Test"})
+}
 module.exports = {
     createAccount,
     signIn,
+    updateProfile,
 }

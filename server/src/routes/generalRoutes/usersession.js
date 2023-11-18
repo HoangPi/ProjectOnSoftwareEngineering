@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 router.use((req,res)=>{
-    if(req.session.userinfo===null || typeof(req.session.userinfo)==='undefined'){
+    if(typeof(req.session.userinfo)==='undefined' || req.session.userinfo===null){
         res.status(402).json({message:"Session not found"})
     }
     else{

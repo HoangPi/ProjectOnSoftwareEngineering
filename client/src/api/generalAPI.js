@@ -30,7 +30,7 @@ export const GetUserSession = async ()=>{
       return "Fail"
     }
 }
-export const SingOut = async ()=>{
+export const SignOut = async ()=>{
   try {
       const response = await fetch('/signout', {
         method: 'POST',
@@ -55,11 +55,26 @@ export const SignIn = async (username,password)=>{
         },
         body: JSON.stringify({username,password})
       });
-      console.log("response")
       const data = await response.json()
       return data
     }
     catch (error) {
       return "Fail"
     }
+}
+export const UpdateProfile = async (name, titles, role, file, accountid)=>{
+  try {
+    const response = await fetch('/updateprofile', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({name, titles, role, file, accountid})
+    });
+    const data = await response.json()
+    return data
+  }
+  catch (error) {
+    return "Fail"
+  }
 }
