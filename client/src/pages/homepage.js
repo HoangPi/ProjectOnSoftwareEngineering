@@ -1,178 +1,73 @@
-import React,{useState} from "react";
+import React, { useEffect, useState } from "react";
+import { GetUserSession, SingOut } from "../api/generalAPI.js"
+import {DefaultNavBar} from "../components/defaultNavBar.js"
 
-function Homepage(){
-    const[popularCourse, setPopularCourses] = useState([
-        {
-            ID: 1,
-            title: "Learning C++, is easy or not? Let me help you with it in 82 minutes",
-            tutor: {
-                ID :1,
-                name:"Tokuda Sensei",
-                username:"@tokudass",
-                dp: "https://i.imgur.com/fzEuoDu.png"
-            },
-            duration: "82 min",
-            poster:"https://i.imgur.com/lCDrBPZ.jpg"
-
-        },
-
-        {
-            ID: 2,
-            title: "I have seen this movie and was very impressed by the visuals and storytelling. So I want to practice using color, lighting, film composition, reducing shape, and adding my own style as well",
-            tutor: {
-                ID :3,
-                name:"Miyamoto Sensei",
-                username:"@miyass",
-                dp: "https://i.imgur.com/fzEuoDu.png"
-            },
-            duration: "100 min",
-            poster:"https://i.imgur.com/lCDrBPZ.jpg"
-
-        }
-    ]);
-    const[topTutor, setTopTutor] = useState([
-        {
-                ID :1,
-                name:"Tokuda Sensei",
-                username:"@tokudass",
-                dp: "https://i.imgur.com/fzEuoDu.png"
-            
-        },
-
-        {
-                ID :2,
-                name:"Miyamoto Sensei",
-                username:"@miyass",
-                dp: "https://i.imgur.com/LVUeWmJ.jpg"
-            
-        },
-        {
-            ID :3,
-            name:"Tokuda Sensei",
-            username:"@tokudass",
-            dp: "https://i.imgur.com/fzEuoDu.png"
-        
-    },
-
-    {
-            ID :4,
-            name:"Miyamoto Sensei",
-            username:"@miyass",
-            dp: "https://i.imgur.com/LVUeWmJ.jpg"
-        
-    },
-    {
-        ID :5,
-        name:"Tokuda Sensei",
-        username:"@tokudass",
-        dp: "https://i.imgur.com/fzEuoDu.png"
-    
-    },
-
-    {
-        ID :3,
-        name:"Miyamoto Sensei",
-        username:"@miyass",
-        dp: "https://i.imgur.com/LVUeWmJ.jpg"
-    
-    }
-    
-    ]);
-
-    var turtorList=[];
-    for(let i=0;i<6;i++){
-        turtorList.push(
-            <button className="tutor rel" key ={"tutor-live-"+i}> 
-                <img src="https://i.imgur.com/mO5bMwx.png" className="bl"/>
-            </button>
-        );
-    }
-
-    var coursesList=[];
-    for(let i=0;i<popularCourse.length;i++){
-        coursesList.push(
-            <a href="#" className="courses rel" key ={"popular-courses-"+i}> 
-                <div className="block" style={{
-                    background: "#bfb5b5 url(" + popularCourse[i].poster + ") no-repeat center"
-                }}>
-                    <div className="user abs alc flex">
-                        <div className="pic">
-                            <img src={popularCourse[i].tutor.dp} className="bl"/>
-                        </div>
-                        <div className="meta rel">
-                            <h2 className="name s15 fontb cff">{popularCourse[i].tutor.name}</h2>
-                            <h2 className="uname s13 fontb cff">{popularCourse[i].tutor.username}</h2>
-                            
-                        </div>
-                    </div>
-                    <div className="duration abs">
-                        <h2 className="duration s15 fontb cff">{popularCourse[i].duration}</h2>
-                    </div>    
-                    <div className="course-title abs">
-                        <h2 className="duration s15 fontb cff">{popularCourse[i].title}</h2>
-                    </div>
-
-
-                </div>
+function Homepage() {
+    const [user, setUser] = useState()
+    const [role,setRole]=useState()
+    const [hasSession,setHasSession]=useState(false)
+    useEffect(() => {
+        GetUserSession()
+            .then(respone => {
+                console.log(respone)
+                if(respone.userinfo!==null && typeof(respone.userinfo)!=='undefined'){
+                    console.log(respone.userinfo)
+                    setUser(respone.userinfo)
+                    setRole(respone.role)
+                    setHasSession(true)
+                }
                 
-            </a>
-        );
-    }
-// Top tutor list
-    var topTutorList=[];
-    for(let i=0;i<topTutor.length;i++){
-        topTutorList.push(
-            <a href="#" className="user-block rel noul" key ={"top-tutor-"+i}> 
-                
-                    <div className="user alc flex">
-                        <div className="pic">
-                            <img src={topTutor[i].dp} className="bl"/>
-                        </div>
-                        <div className="meta rel">
-                            <h2 className="name s15 fontb c33">{topTutor[i].name}</h2>
-                            <h2 className="uname s13 fontb c33">{topTutor[i].username}</h2>
-                            
-                        </div>
-                    </div>
-                
-            </a>
-        );
+            })
+    },[])
+
+    const handleSignOut=()=>{
+        // console.log('Sign Out')
+        SingOut()
+        window.location.reload()
     }
 
-//<img src={"https://i.imgur.com/LVUeWmJ.jpg" + i} className="bl"/>
-    return(
-        
-        <div className="home-page rel">
-            <div className="section rel">
-                <h2 className="title s24 fontb">Streaming
-                <span className="title2 fontn"> Now</span>
-                </h2> 
-                <div className="tutors rel flex">
-                    {turtorList}
+    if(!hasSession) return <DefaultNavBar></DefaultNavBar>
+    return (
+        <nav class="navbar bg-body-tertiary fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">Udemy</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Hello {role} {user.name}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Account
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                                    <li><a class="dropdown-item" href="/course">Course</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider" />
+                                    </li>
+                                    <li onClick={handleSignOut}><a class="dropdown-item" href="/">Sign out</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <form class="d-flex mt-3" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-{/* Popular courses */}
-            <div className="section section-b rel">
-                <h2 className="title s24 fontb">Popular
-                <span className="title2 fontn"> Courses</span>
-                </h2> 
-                <div className="courses rel flex">
-                    {coursesList}
-                </div>
-            </div>
-            {/* Top tutor */}
-            <div className="section section-b rel">
-                <h2 className="title s24 fontb">Top
-                <span className="title2 fontn"> Tutors</span>
-                </h2> 
-                <div className="top-tutor rel flex">
-                    {topTutorList}
-                </div>
-            </div>
+        </nav>
 
-        </div>
 
-        
     )
 }
 
