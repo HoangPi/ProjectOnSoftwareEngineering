@@ -43,8 +43,7 @@ body {
 }
 
 .app-content{
-  margin-top: 50px;
-  margin-left: 0%;
+  margin: 20px 20px 20px 20px;
   
 }
 .headbar {
@@ -111,6 +110,9 @@ body {
 }
 .sidebar.active {
   left: 0px; /* Position when sidebar is visible */
+}
+.sidebar .user-info {
+  text-decoration: none;
 }
 .sidebar .logo{
   align-items: center;
@@ -241,11 +243,15 @@ Home page
 }
 
 .home-page .section-b{
+  border-radius: 20px;
+  background-color: rgba(114, 112, 108, 0.1);
   margin-top: 50px;
 }
 
+
 .home-page .section .courses{
   margin-top: 50px;
+  margin: 20px 20px 20px 20px;
 }
 
 .home-page .section .courses .progress-bar {
@@ -331,6 +337,7 @@ Home page
 
 .home-page .section .top-tutor{
   flex-wrap: wrap;
+  margin: 20px 20px 20px 20px;
 }
 
 .home-page .section .user-block{

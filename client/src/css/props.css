@@ -28,18 +28,20 @@ button{
 .bl{display:block;}
 
 .alc{align-items: center;}
+.als{align-items:start;}
 .jlc{justify-content: center;}
 
 .c33{color: #333;}
 .c77{color: #777;}
 .cff{color:#fff}
-
+.cdef{color:#fbbb61}
 .s10{font-size: 10px;}
 .s13{font-size: 13px;}
 .s15{font-size: 15px;}
 .s20{font-size: 20px;}
 .s24{font-size: 24px;}
-
+.s30{font-size: 30px;}
+.s34{font-size: 34px;}
 .fontb{
     font-weight: bold;
 }

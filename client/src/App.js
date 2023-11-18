@@ -1,17 +1,20 @@
 import './css/App.css';
 import './css/props.css';
 import './css/uifonts.css';
+import './pages/profilePage/profilePage.css'
 
 import React, { useEffect, useState } from 'react'
 import * as api from './api/apiColections.js'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Homepage  from './pages/homepage';
+import Profilepage  from './pages/profilePage/profilePage';
 import { Signup } from './pages/signup';
 
 
 import Header from './components/header.js';
 import Sidebar from './components/sidebar.js';
 import Rightbar from './components/rightbar.js';
+
 function App() {
   const [posts, setPosts] = useState([{}])
   const [content, setContent] = useState('')
@@ -44,6 +47,7 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<Homepage/>}/>
+          <Route path='/profile' element={<Profilepage/>}/>
           <Route path='/signup' element={<Signup/>}/>
         </Routes>
       </Router>

@@ -65,8 +65,8 @@ function Sidebar({ sidebarVisible }){
                     <h2 className = "lbl s10 c777">Complete</h2>
                 </div>
             </div>
-
-            <div className="user flex alc ">
+            <a href="/profile" className="user-info">
+            <div className="user flex alc " >
                 <div className="photo cff s24">
                     <img src="https://i.imgur.com/LVUeWmJ.jpg" className="bl"/>
                 </div>
@@ -77,6 +77,8 @@ function Sidebar({ sidebarVisible }){
                 </div>
 
             </div>
+            </a>
+            
 
 
         </div>

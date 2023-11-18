@@ -1,0 +1,49 @@
+.profile-page{
+    margin-top: 100px;
+}
+.profile-section {
+    margin: 20px 20px 20px 20px;
+    display: flex;
+    align-items: center;
+    background-color: rgba(114, 112, 108, 0.1);
+    border-radius: 22px;
+    border: 1px solid #000;
+    height: 400px;
+  }
+
+  
+  .avatar {
+    flex: 1;
+  }
+  
+  .avatar img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+  }
+  
+  .profile-info {
+    flex: 3;
+    padding-left: 20px;
+  }
+  
+  .profile-info .txtb {
+    margin-bottom: 10px;
+  }
+  
+  .profile-info .txt {
+    margin-bottom: 5px;
+    margin-left: 5px;
+  }
+
+  .profile-section .edit .btn-save{
+    margin: 20px 20px 20px 20px;
+    background-color: #fbbb61;
+    border-radius: 22px;
+  }
+  .profile-section .btn-edit{
+    margin: 20px 20px 20px 20px;
+    background-color: #fbbb61;
+    border-radius: 22px;
+  }
+

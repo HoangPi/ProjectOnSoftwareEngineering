@@ -19,7 +19,7 @@ function HeadBar() {
               <div className={`open-sidebar-btn ${sidebarVisible ? 'active' : ''}`} onClick={toggleSidebar}>
                 <div className="icon-list ico-sidebar c33 s24" />
               </div>
-              <a className="navbar-brand cff" href="#">Online Academy</a>
+              <a className="navbar-brand cff" href="/">Online Academy</a>
               
             </div>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,10 +35,10 @@ function HeadBar() {
                   <a className="nav-link active " aria-current="page" href="#">About Us</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="#">Pricing</a>
+                  <a className="nav-link active" aria-current="page" href="/profile">Profile</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="#">Sign in</a>
+                  <a className="nav-link active" aria-current="page" href="/signup">Sign in</a>
                 </li>
                 
               </ul>
