@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { GetUserSession } from "../api/generalAPI"
+import { GetUserSession, UpdateProfile } from "../api/generalAPI"
+import { NavigationBar } from "../components/NavBar"
 
 
 function convertToBase64(file){
@@ -24,8 +25,12 @@ export const Profile = () => {
     const [role, setRole] = useState()
     const [isLoading, setIsLoading] = useState(true)
     const [certifications, setCertifications] = useState([])
+    const [name,setName]=useState('')
     const [file, setFile] = useState()
 
+    const handleNameOnChange=(ev)=>{
+        setName(ev.target.value)
+    }
     //handle multiple button types
     const handleUploadFile = async (ev) => {
         const base64=await convertToBase64(ev.target.files[0])
@@ -34,8 +39,16 @@ export const Profile = () => {
         console.log(base64)
     }
     const handleButtonsOnClick = (ev) => {
+        ev.preventDefault()
         if (ev.target.value === 'return') navigate('/')
-        else if (ev.target.value === 'sumbit') navigate('/profile')
+        else if (ev.target.value === 'submit') {
+            console.log("Update")
+            UpdateProfile(name,certifications,role,file, user.accountid)
+                .then((respone)=>{
+                    window.location.reload()
+                    console.log(respone)
+                })
+        }
     }
     const updateCertifications = (ev) => {
         let newArray = [...certifications]
@@ -61,6 +74,7 @@ export const Profile = () => {
                     // console.log(respone.userinfo)
                     setUser(respone.userinfo)
                     setRole(respone.role)
+                    setName(respone.userinfo.name)
                     setCertifications(respone.userinfo.titles)
                     setFile(respone.userinfo.avatar)
                     setIsLoading(false)
@@ -74,7 +88,8 @@ export const Profile = () => {
     </div>
     return (
         <div>
-            <div style={{ marginLeft: '13%', marginRight: '10%' }} class="col-lg-9 col-md-8 col-12">
+            <NavigationBar user={user} role={role}></NavigationBar>
+            <div style={{ marginLeft: '13%', marginRight: '10%', paddingTop:'120px', marginBottom:'50px' }} class="col-lg-9 col-md-8 col-12">
                 {/* <!-- Card --> */}
                 <div class="card">
                     {/* <!-- Card header --> */}
@@ -104,7 +119,7 @@ export const Profile = () => {
                                 {/* <!-- First name --> */}
                                 <div class="mb-3 col-12 col-md-6">
                                     <label class="form-label" for="fname">Your name</label>
-                                    <input value={user.name} type="text" id="fname" class="form-control" placeholder="First Name" required="" />
+                                    <input value={name} onChange={handleNameOnChange} type="text" id="fname" class="form-control" placeholder="Your name" required="" />
                                     <div class="invalid-feedback">Please enter your name.</div>
                                 </div>
                                 {/* <!-- Last name --> */}

@@ -12,6 +12,7 @@ const signup = require('./routes/generalRoutes/signup.js')
 const getusersession = require('./routes/generalRoutes/usersession.js')
 const signout = require('./routes/generalRoutes/signout.js')
 const signin =require('./routes/generalRoutes/signin.js')
+const updateprofile = require('./routes/generalRoutes/updateprofile.js')
 
 app.use(bodyParser.json());
 app.use((req,res,next)=> {
@@ -28,6 +29,7 @@ app.use('/signup',signup)
 app.use('/getusersession',getusersession)
 app.use('/signout',signout)
 app.use('/signin',signin)
+app.use('/updateprofile',updateprofile)
 
 // app.listen(port,() => {console.log("Server is running on port 5000")})
 mongoose.connect(databseURI)
