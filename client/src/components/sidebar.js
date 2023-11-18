@@ -11,8 +11,8 @@ function Sidebar({ sidebarVisible }){
     const [nav,setNav] = useState([
         {lab:"Home", slug:"/", icon: "icon-home"},
         {lab:"Discover", slug:"discover", icon: "icon-compass2"},
-        {lab:"Category", slug:"category", icon: "icon-books"},
-        {lab:"My Courses", slug:"my-courses", icon: "icon-book"}
+        {lab:"Sign up", slug:"signup", icon: "icon-pencil"},
+        {lab:"Sign in", slug:"signin", icon: "icon-user"}
 
     ])
     const [currentPage,setCurrentPage] = useState("/");

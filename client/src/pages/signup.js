@@ -1,6 +1,23 @@
 import { useState } from "react";
-import * as api from "../api/apiColections.js"
+import { SignUp } from "../api/generalAPI.js";
+import {useNavigate} from "react-router-dom"
+function convertToBase64(file){
+    return new Promise((resolve,reject)=>{
+        try{
+            const fileReader = new FileReader()
+            
+            fileReader.readAsDataURL(file)
+            fileReader.onload=() => resolve(fileReader.result)
+            fileReader.onerror=(err) => reject(err)
+        }
+        
+        catch(err){
+            console.log(err)
+        }
+    })
+}
 export const Signup = () => {
+    const navigate = useNavigate()
     const [username, setUsername] = useState('');
     const [password1, setPassword1] = useState('');
     const [password2, setPassword2] = useState('');
@@ -8,8 +25,14 @@ export const Signup = () => {
     const [email, setEmail] = useState('');
     const [role, setRole] = useState(1);
     const [certifications, setCertifications] = useState([]);
+    const [file, setFile] = useState('https://th.bing.com/th/id/R.8e2c571ff125b3531705198a15d3103c?rik=gzhbzBpXBa%2bxMA&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fuser-png-icon-big-image-png-2240.png&ehk=VeWsrun%2fvDy5QDv2Z6Xm8XnIMXyeaz2fhR3AgxlvxAc%3d&risl=&pid=ImgRaw&r=0')
 
-
+    const handleUploadFile = async (ev) => {
+        const base64=await convertToBase64(ev.target.files[0])
+        if(base64.slice(5,10)==='image') setFile(base64)
+        else alert("File is not image")
+        // console.log(base64)
+    }
     const handleUsernameOnChange = (ev) => {
         setUsername(ev.target.value);
     }
@@ -19,10 +42,10 @@ export const Signup = () => {
     const handlePassword2OnChange = (ev) => {
         setPassword2(ev.target.value);
     }
-    const handelEmailOnChange = (ev) =>{
+    const handelEmailOnChange = (ev) => {
         setEmail(ev.target.value)
     }
-    const handleNameOnChange = (ev) =>{
+    const handleNameOnChange = (ev) => {
         setFullname(ev.target.value)
     }
     const roleOnClick = (ev) => {
@@ -45,24 +68,37 @@ export const Signup = () => {
 
         setCertifications([...certifications.slice(0, temp), ...certifications.slice(temp + 1)])
     }
-    const sendInfo = (ev)=>{
-        if(password1!==password2){
+    const handleSignUp = async (ev) => {
+        if (password1 !== password2) {
             alert("Passwords Must Be The Same and Non-empty");
             return;
         }
-        if(username===''
-        || password1===''
-        || password2===''
-        || email === ''
-        || fullname === ''){
+        if (username === ''
+            || password1 === ''
+            || password2 === ''
+            || email === ''
+            || fullname === '') {
             alert("Please Fill All The Fields");
             return;
         }
-        role===1 && api.SignupForUser(ev,username,password1,role,email,fullname);
-        role===2 && api.SignupForLecturer(ev,username,password1,role,email,fullname,certifications)
+        SignUp(username,password1,email,fullname,role,file,certifications)
+            .then((data)=>{
+                if(data.status===200){
+                    alert("Account created")
+                    navigate('/')
+                }
+                else if(data.status===400){
+                    alert("Username exist, please use an another one")
+                }
+                else{
+                    alert("Internal error, please try again sometime later")
+                }
+                // console.log(data.json())
+
+            })
     }
     return (
-        <div>
+        <div style={{ paddingLeft: '25%', paddingRight: '25%', paddingTop:'5%', paddingBottom:'10%' }}>
             <div class="form-floating mb-3">
                 <input type='text' class="form-control" id="floatingInput0" placeholder="username" onChange={handleUsernameOnChange} />
                 <label for="floatingInput">Username</label>
@@ -76,23 +112,31 @@ export const Signup = () => {
                 <label for="floatingPassword">Retype Password</label>
             </div>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingPassword3" placeholder="Your Name" onChange={handleNameOnChange}/>
+                <input type="text" class="form-control" id="floatingPassword3" placeholder="Your Name" onChange={handleNameOnChange} />
                 <label for="floatingPassword">Your Name</label>
             </div>
             <div class="input-group mb-3">
-                <input type="email" class="form-control" id="floatingInput4" placeholder="Email" onChange={handelEmailOnChange}/>
+                <input type="email" class="form-control" id="floatingInput4" placeholder="Email" onChange={handelEmailOnChange} />
                 <button class="btn btn-outline-secondary" type="button" id="button-addon2">Send OTP</button>
             </div>
+            <div class="input-group mb-3">
+                <input onChange={handleUploadFile} type="file" class="form-control" id="inputGroupFile02" />
+            </div>
+            <div class="text-center">
+                <img width='200px' height='200px' src={file} class="rounded" alt="User avatar" />
+            </div>
+            <h6>Tell us who you are</h6>
             <div class="form-check">
                 <input class="form-check-input" type="radio" value={1} name="flexRadioDefault" id="flexRadioDefault1" checked={role === 1} onChange={roleOnClick} />
                 <label class="form-check-label" for="flexRadioDefault1">
-                    Looking For Courses
+                    Student
                 </label>
             </div>
+
             <div class="form-check">
                 <input class="form-check-input" type="radio" value={2} name="flexRadioDefault" id="flexRadioDefault2" onChange={roleOnClick} />
                 <label class="form-check-label" for="flexRadioDefault2">
-                    Want To Share Courses
+                    Tutor
                 </label>
             </div>
             {
@@ -114,12 +158,18 @@ export const Signup = () => {
                                     add_circle_outline
                                 </span>
                             </button>
-                            <input class="form-control" type="text" placeholder="Add More" aria-label="Disabled input example" disabled ></input>
+                            <input class="form-control" type="text" placeholder="Add new title" aria-label="Disabled input example" disabled ></input>
                         </div>
                     </>
                 )
             }
-            <button type="button" class="btn btn-primary btn-lg" onClick={sendInfo}>Submit</button>
+            <button  style={{marginRight:'20px'}} type="button" class="btn btn-primary btn-lg" onClick={handleSignUp}>Submit</button>
+            <a style={{marginRight:'20px'}} href="/">
+                <button type="button" class="btn btn-primary btn-lg" >Return</button>
+            </a>
+            <a style={{marginRight:'20px'}} href="/signin">
+                <button type="button" class="btn btn-primary btn-lg" >Sign in</button>
+            </a>
         </div>
     )
 }

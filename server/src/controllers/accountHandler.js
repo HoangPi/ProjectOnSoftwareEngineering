@@ -1,9 +1,9 @@
 const Account = require("../models/account.js")
-const Student = require("../models/student.js")
-const Lecturer = require("../models/lecturer.js")
+const Tutor = require("../models/tutor.js")
+const User = require("../models/user.js")
 
 
-function addUser(req, res) {
+/*function addUser(req, res) {
     // const user = new Account({
     //     username: req.body.username,
     //     password: req.body.password,
@@ -46,8 +46,9 @@ function addUser(req, res) {
             console.log(err)
             res.json({message:"Error occured while trying to create account"})
         })
-}
-function addLecturer(req,res){
+}*/
+
+/*function addLecturer(req,res){
     const lecturer  = new Lecturer({
         fullname: req.body.name,
         certifications: req.body.certifications,
@@ -83,9 +84,106 @@ function addLecturer(req,res){
             console.log(err)
             res.json({message:"Error occured while trying to create account"})
         })
+}*/
+function createAccount(req,res){
+    console.log(req.body)
+    const account = new Account({
+        username: req.body.username,
+        password:req.body.password,
+        role:req.body.role,
+    })
+    Account.exists({username:account.username})
+        .then((check)=>{
+            if(check){
+                res.status(400).json({message:"Uername exists"})
+            }
+            else{
+                account.save()
+                    .then(doc=>{
+                        try{
+                            if(req.body.role===1){
+                                const user = new User({
+                                    name:req.body.name,
+                                    email:req.body.email,
+                                    avatar:req.body.avatar,
+                                    accountid:doc._id,
+                                    })
+                                user.save()
+                                    .then(result=>{
+                                        req.session.userinfo=result
+                                        req.session.role='student'
+                                        res.status(200).json({message:"Account created"})
+                                    })
+                            }
+                            else if(req.body.role==2){
+                                const tutor = new Tutor({
+                                    name:req.body.name,
+                                    email:req.body.email,
+                                    avatar:req.body.avatar,
+                                    accountid:doc._id,
+                                    titles: req.body.titles,
+                                })
+                                tutor.save()
+                                    .then(result=>{
+                                        req.session.userinfo=result
+                                        req.session.role='tutor'
+                                        res.status(200).json({message:"Account created"})
+                                    })
+                            }
+                            else{
+                                res.status(401).status({message:"Interal error"})
+                            }
+                        }
+                        catch(err){
+                            console.lof(err)
+                            Account.remove({_id:doc._id})
+                                .then(()=>res.status(401).status({message:"Interal error"}))
+                        }
+                    })
+            }
+        })
 }
-
+function signIn(req,res){
+    Account.findOne({username:req.body.username,password:req.body.password})
+        .then((result)=>{
+            // console.log(result)
+            if(typeof(result)!=='undefined' && result!==null){
+                if(result._doc.role==='1'){
+                    User.findOne({accountid:result._doc._id})
+                        .then((user)=>{
+                            if(typeof(user)!=='undefined' && user!==null){
+                                // console.log(user._doc)
+                                req.session.userinfo=user._doc
+                                req.session.role='student'
+                                res.status(200).json({signin:true})
+                            }
+                            else res.status(405).json({signin:false})
+                        })
+                }
+                else if(result._doc.role==='2'){
+                    Tutor.findOne({accountid:result._doc._id})
+                        .then((user)=>{
+                            if(typeof(user)!=='undefined' && user!==null){
+                                req.session.userinfo=user._doc
+                                req.session.role='tutor'
+                                res.status(200).json({signin:true})
+                            }
+                            else res.status(405).json({signin:false})
+                        })
+                }
+                else res.status(405).json({signin:false})
+            }
+            else{
+                // console.log("Wrong")
+                res.status(405).json({signin:false})
+            }
+        })
+        .catch(error=>{
+            console.log(error)
+            res.status(405).json({signin:false})
+        })
+}
 module.exports = {
-    addUser,
-    addLecturer,
+    createAccount,
+    signIn,
 }

@@ -1,7 +1,5 @@
 const express = require('express')
-const bodyParser = require('body-parser');
-const addUser = require('./routes/addUser.js')
-const addLecturer = require('./routes/addLecturer.js')
+const session = require('express-session')
 
 const databseURI = require("./database/databaseURI.js")
 const mongoose = require("mongoose")
@@ -9,18 +7,29 @@ const mongoose = require("mongoose")
 const app = express()
 const port = 5000
 
+const bodyParser = require('body-parser');
+const signup = require('./routes/generalRoutes/signup.js')
+const getusersession = require('./routes/generalRoutes/usersession.js')
+const signout = require('./routes/generalRoutes/signout.js')
+const signin =require('./routes/generalRoutes/signin.js')
+
 app.use(bodyParser.json());
-app.get("/api",(req,res) => {
-    console.log("req.body")
-    res.json({User})
-})
 app.use((req,res,next)=> {
     console.log(`${req.method} ${req.url}`);
     next();
 });
-app.use('/newuser',addUser)
-app.use('/newlecturer',addLecturer)
+app.use(session({
+    secret: 'my-secret', // a secret string used to sign the session ID cookie
+    resave: false, // don't save session if unmodified
+    saveUninitialized: false // don't create session until something stored
+}))
 
+app.use('/signup',signup)
+app.use('/getusersession',getusersession)
+app.use('/signout',signout)
+app.use('/signin',signin)
+
+// app.listen(port,() => {console.log("Server is running on port 5000")})
 mongoose.connect(databseURI)
         .then((result)=>app.listen(port,() => {console.log("Server is running on port 5000")}))
         .catch((err)=>console.log(err))

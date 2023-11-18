@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const {addUser} = require("../controllers/accountHandler.js")
+const {signIn} = require("../../controllers/accountHandler.js")
 
 router.use((req,res,next)=>{
     next()
 })
 
-router.post("/",addUser)
+router.post("/",signIn)
 
 module.exports = router;
