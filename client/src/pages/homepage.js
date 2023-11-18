@@ -7,8 +7,8 @@ function Homepage(){
             title: "Learning C++, is easy or not? Let me help you with it in 82 minutes",
             tutor: {
                 ID :1,
-                name:"Tokuda Sensei",
-                username:"@tokudass",
+                name:"C++ Beginner",
+                username:"Ths. Tokuda Sensei",
                 dp: "https://i.imgur.com/fzEuoDu.png"
             },
             duration: "82 min",
@@ -21,11 +21,42 @@ function Homepage(){
             title: "I have seen this movie and was very impressed by the visuals and storytelling. So I want to practice using color, lighting, film composition, reducing shape, and adding my own style as well",
             tutor: {
                 ID :3,
-                name:"Miyamoto Sensei",
-                username:"@miyass",
+                name:"C++ Advance",
+                username:"Ths. Tokuda Sensei",
                 dp: "https://i.imgur.com/fzEuoDu.png"
             },
             duration: "100 min",
+            poster:"https://i.imgur.com/lCDrBPZ.jpg"
+
+        }
+    ]);
+    const[yourCourses, setyourCourses] = useState([
+        {
+            ID: 1,
+            title: "Learning C++, is easy or not? Let me help you with it in 82 minutes",
+            tutor: {
+                ID :1,
+                name:"C++ Beginner",
+                username:"Ths. Tokuda Sensei",
+                dp: "https://i.imgur.com/fzEuoDu.png"
+            },
+            percentage: 0.5,
+            duration:"9 hours",
+            poster:"https://i.imgur.com/lCDrBPZ.jpg"
+
+        },
+
+        {
+            ID: 2,
+            title: "So I want to practice using color, lighting, film composition, reducing shape, and adding my own style as well",
+            tutor: {
+                ID :3,
+                name:"C++ Mastery",
+                username:"Ths. Tokuda Sensei",
+                dp: "https://i.imgur.com/fzEuoDu.png"
+            },
+            percentage: 0.5,
+            duration:"11 hours",
             poster:"https://i.imgur.com/lCDrBPZ.jpg"
 
         }
@@ -101,7 +132,7 @@ function Homepage(){
                         </div>
                         <div className="meta rel">
                             <h2 className="name s15 fontb cff">{popularCourse[i].tutor.name}</h2>
-                            <h2 className="uname s13 fontb cff">{popularCourse[i].tutor.username}</h2>
+                            <h2 className="uname s13 fontn cff">{popularCourse[i].tutor.username}</h2>
                             
                         </div>
                     </div>
@@ -109,9 +140,45 @@ function Homepage(){
                         <h2 className="duration s15 fontb cff">{popularCourse[i].duration}</h2>
                     </div>    
                     <div className="course-title abs">
-                        <h2 className="duration s15 fontb cff">{popularCourse[i].title}</h2>
+                        <h2 className="course-title-text s15 fontb cff" >{popularCourse[i].title} </h2>
                     </div>
 
+
+                </div>
+                
+            </a>
+        );
+    }
+    var yourCoursesList=[];
+    for(let i=0;i<yourCourses.length;i++){
+        const percentage = Math.floor(yourCourses[i].percentage * 100); // Convert float to percentage
+
+  // Calculate the width of the progress bar
+        const progressBarWidth = percentage + "%";
+        yourCoursesList.push(
+            <a href="#" className="courses rel" key ={"your-courses-"+i}> 
+                <div className="block" style={{
+                    background: "#bfb5b5 url(" + yourCourses[i].poster + ") no-repeat center"
+                }}>
+                    <div className="user abs alc flex">
+                        <div className="pic">
+                            <img src={yourCourses[i].tutor.dp} className="bl"/>
+                        </div>
+                        <div className="meta rel">
+                            <h2 className="name s15 fontb cff">{yourCourses[i].tutor.name}</h2>
+                            <h2 className="uname s13 fontn cff">{yourCourses[i].tutor.username}</h2>
+                            
+                        </div>
+                    </div>
+                    <div className="duration abs">
+                        <h2 className="duration s15 fontb cff">{yourCourses[i].duration}</h2>
+                    </div>    
+                    <div className="course-title abs">
+                        <h2 className="course-title-text s15 fontb cff">{yourCourses[i].title}</h2>
+                    </div>
+                    <div className="progress-bar" style={{ width: progressBarWidth }}>
+                        <span className="progress-text s15 fontb cff">{percentage}%</span>
+                    </div>
 
                 </div>
                 
@@ -143,12 +210,12 @@ function Homepage(){
     return(
         
         <div className="home-page rel">
-            <div className="section rel">
-                <h2 className="title s24 fontb">Streaming
-                <span className="title2 fontn"> Now</span>
+            <div className="section section-b rel">
+                <h2 className="title s24 fontb">Your
+                <span className="title2 fontn"> Courses</span>
                 </h2> 
-                <div className="tutors rel flex">
-                    {turtorList}
+                <div className="courses rel flex">
+                    {yourCoursesList}
                 </div>
             </div>
 {/* Popular courses */}

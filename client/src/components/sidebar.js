@@ -22,9 +22,9 @@ function Sidebar({ sidebarVisible }){
                 <li key={"nav-"+ i +"-"+ nav[i].slug}>
                     <a href={nav[i].slug} className={"link noul flex c33" + (currentPage == nav[i].slug ? " on" : "")}>
 
-                        <div className={"ico s24 " + nav[i].icon}/>
+                        <div className={"ico s20 " + nav[i].icon}/>
 
-                        <h2 className="lbl s20">{nav[i].lab}</h2>
+                        <h2 className="lbl s15">{nav[i].lab}</h2>
                     </a>
                 </li>
             );
@@ -34,35 +34,35 @@ function Sidebar({ sidebarVisible }){
         <div className={`sidebar rel ${sidebarVisible ? "active" : ""}`}>
 
             <a herf="#" className="logo">
-                <img src={logo} className="bl"/>
+                <img src={logo} className="bl site-icon"/>
             </a>
 
             <ul className="nav">
                 {navigation}                
             </ul>
 
-            <div className="updated-course flex alc">
+            {/* <div className="updated-course flex alc">
                 <div className="icon-newspaper ico cff s24"/>
-                <div className="lbl s15 fontb c33">
+                <div className="lbl s10 fontb c33">
                     UpdatedCourses
                     <h2 className = "author s13 c777">by Principle Moutain Dew</h2>
 
                 </div>
 
-            </div>
+            </div> */}
 
 
             <div className="stats flex">
                 <div className="stats-box jlc flex">
                     <div className="ico s24 icon-star-full alc jlc"/>
-                    <h2 className = "val s13 c777">9.5</h2>
-                    <h2 className = "lbl s13 c777">Average Point</h2>
+                    <h2 className = "val s10 c777">9.5</h2>
+                    <h2 className = "lbl s10 c777">Average Point</h2>
                 </div>
 
                 <div className="stats-box jlc flex">
                     <div className="ico s24 icon-checkmark alc jlc"/>
-                    <h2 className = "val s13 c777">50%</h2>
-                    <h2 className = "lbl s13 c777">Complete</h2>
+                    <h2 className = "val s10 c777">50%</h2>
+                    <h2 className = "lbl s10 c777">Complete</h2>
                 </div>
             </div>
 
