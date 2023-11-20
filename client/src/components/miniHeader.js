@@ -1,6 +1,6 @@
 export const MiniHeader = (props) => {
     return (
-        <div class="row align-items-center">
+        <div style={{width:'100%', paddingLeft:'5%', paddingRight:'5%', marginBottom:'20px'}} class="row align-items-center">
             {/* <!-- User info --> */}
             <div class="col-xl-12 col-lg-12 col-md-12 col-12">
                 {/* <!-- Bg --> */}

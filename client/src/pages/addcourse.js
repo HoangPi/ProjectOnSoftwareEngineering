@@ -6,6 +6,7 @@ import { AddCourseStep3 } from "../components/addCourseStep3"
 import { AddCourseStep4 } from "../components/addCourseStep4"
 import { addCourse } from "../api/tutorAPI"
 import { GetUserSession } from "../api/generalAPI"
+import { NavigationBar } from "../components/NavBar"
 
 export const AddCourse = (ev) => {
     const navigate = useNavigate()
@@ -16,6 +17,9 @@ export const AddCourse = (ev) => {
     const [step, setStep] = useState(1)
     const [file, setFile] = useState('https://th.bing.com/th/id/OIP.AC9frN1qFnn-I2JCycN8fwHaEK?w=307&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7')
     const [contentList,setContentList] = useState([])
+    const [user,setUser]= useState()
+    const [role,setRole]=useState()
+    const [isLoading,setIsLoading] = useState(true)
 
     const handleSubmit =(ev)=>{
         addCourse(file,courseName,Category,level,description,contentList)
@@ -38,12 +42,20 @@ export const AddCourse = (ev) => {
                 if(response.message==='Session not found'){
                     navigate('/')
                 }
+                else{
+                    setRole(response.role)
+                    setUser(response.userinfo)
+                    setIsLoading(false)
+                }
             })
     },[])
-    
+    if (isLoading) return <div class="d-flex align-items-center">
+        <strong role="status">Loading...</strong>
+        <div class="spinner-border ms-auto" aria-hidden="true"></div>
+    </div>
     return (
         <div>
-            {/* Nav bar later */}
+            <NavigationBar user={user} role={role}></NavigationBar>
             {step === 1
                 ? <AddCourseStep1 des={description} coursename={courseName} defaultlevel={level} defaultcat={Category} setcoursename={setCourseName} setdescription={setDescription} setcategory={setCategory} setlevel={setLevel}></AddCourseStep1>
                 : step === 2 
