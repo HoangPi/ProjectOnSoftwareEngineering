@@ -10,6 +10,9 @@ import Homepage  from './pages/homepage';
 import { Signup } from './pages/signup';
 import { Profile } from './pages/profile.js';
 import {SignInPage} from './pages/signin.js'
+import { DashBoard } from './pages/dashBoard.js';
+import { TestPage } from './pages/test.js';
+import { AddCourse } from './pages/addcourse.js';
 
 
 // import Header from './components/header.js';
@@ -50,6 +53,8 @@ function App() {
           <Route path='/signup' element={<Signup/>}/>
           <Route path='/signin' element={<SignInPage/>}/>
           <Route path='/profile' element={<Profile/>}></Route>
+          <Route path='/dashboard' element={<DashBoard/>}></Route>
+          <Route path='/addcourse' element={<AddCourse></AddCourse>}></Route>
         </Routes>
       </Router>
       {/* </div> */}
