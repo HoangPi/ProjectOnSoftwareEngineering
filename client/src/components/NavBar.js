@@ -31,7 +31,7 @@ export const NavigationBar = (props) => {
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="/profile">Profile</a></li>
-                                    <li><a class="dropdown-item" href="/course">Course</a></li>
+                                    <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
                                     <li>
                                         <hr class="dropdown-divider" />
                                     </li>

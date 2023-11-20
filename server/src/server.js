@@ -13,6 +13,8 @@ const getusersession = require('./routes/generalRoutes/usersession.js')
 const signout = require('./routes/generalRoutes/signout.js')
 const signin =require('./routes/generalRoutes/signin.js')
 const updateprofile = require('./routes/generalRoutes/updateprofile.js')
+const addcourse = require('./routes/tutorRoutes/addCourse.js')
+const gettutorcourse = require('./routes/tutorRoutes/getTutorCourse.js')
 
 app.use(bodyParser.json());
 app.use((req,res,next)=> {
@@ -30,6 +32,8 @@ app.use('/getusersession',getusersession)
 app.use('/signout',signout)
 app.use('/signin',signin)
 app.use('/updateprofile',updateprofile)
+app.use('/addcourse',addcourse)
+app.use('/gettutorcourse',gettutorcourse)
 
 // app.listen(port,() => {console.log("Server is running on port 5000")})
 mongoose.connect(databseURI)
