@@ -41,8 +41,8 @@ export const DashBoard =()=>{
     </div>
     return(
         <div>
-            <MiniHeader avatar={user.avatar} name={user.name}></MiniHeader>
             <NavigationBar user={user} role={role}></NavigationBar>
+            <MiniHeader avatar={user.avatar} name={user.name}></MiniHeader>
             {courses.map((value,key)=>
                 <CourseList thumbnail={value.thumbnail} coursename={value.coursename} level={value.level}/>
             )}
