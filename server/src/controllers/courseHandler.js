@@ -57,7 +57,29 @@ function getTutorCouse(req,res){
     }
     
 }
+function getUserCouse(req,res){
+    if(typeof(req.session.userinfo)==='undefined' || req.session.userinfo===null){
+        res.status(200).json({message:"User session does not exist"})
+    }
+    else{
+        Teach.find({studentsid:req.session.userinfo._id})
+            .then(docs=>{
+                res.status(200).json({courses:docs})
+            })
+    }
+    
+}
+function getHomeCourse(req,res){
+    Teach.find({category:req.body.category})
+        .then(docs=>{
+            res.status(200).json({courses:docs})
+        })
+    
+    
+}
 module.exports={
     AddCourse,
     getTutorCouse,
+    getUserCouse,
+    getHomeCourse,
 }

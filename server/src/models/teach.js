@@ -25,6 +25,10 @@ const teachSchema= mongoose.Schema({
         type: String,
         default:'Course Description',
     },
+    studentsid:{
+        type:[],
+        required:true,
+    },
 },{timestamps: true});
 
 const Teach = mongoose.model('teach',teachSchema)

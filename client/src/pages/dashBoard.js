@@ -4,7 +4,9 @@ import { GetUserSession } from "../api/generalAPI"
 import { useNavigate } from "react-router-dom"
 import { MiniHeader } from "../components/miniHeader"
 import { CourseList } from "../components/courseList"
+import { Courses } from "../model/courses"
 import { getTutorCourses } from "../api/tutorAPI"
+import { getUserCourses } from "../api/userAPI"
 
 export const DashBoard =()=>{
     const navigate = useNavigate()
@@ -28,8 +30,19 @@ export const DashBoard =()=>{
                                 console.log(value.courses)
                                 setIsLoading(false)
                             })
-                        
-                        
+                            
+                    }
+
+                    if(response.role==='student'){
+                        setUser(response.userinfo)
+                        setRole(response.role)
+                        getUserCourses()
+                            .then(value=>{
+                                setCourses(value.courses)
+                                console.log(value.courses)
+                                setIsLoading(false)
+                            })
+                            
                     }
                     
                 }
@@ -43,9 +56,44 @@ export const DashBoard =()=>{
         <div>
             <NavigationBar user={user} role={role}></NavigationBar>
             <MiniHeader avatar={user.avatar} name={user.name}></MiniHeader>
-            {courses.map((value,key)=>
-                <CourseList thumbnail={value.thumbnail} coursename={value.coursename} level={value.level}/>
+            {role === "tutor" ? (
+                // Render tutor-specific content
+                <div>
+                    
+                    {courses.map((value, key) => (
+                        <CourseList
+                        key={key}
+                        thumbnail={value.thumbnail}
+                        coursename={value.coursename}
+                        level={value.level}
+                    />
+                    ))}
+                </div>
+            ) : (
+                // Render student-specific content
+                <div>
+                    
+                    <section className="product">
+                        <div className="container" >
+                            <div className="row" >
+                                {courses.map((value, key) => (
+                                    <Courses
+                                    key={key}
+                                    thumbnail={value.thumbnail}
+                                    coursename={value.coursename}
+                                    tutorid={value.tutorid}
+                                    category={value.category}
+                                    description={value.description}
+                                />
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                </div>
             )}
         </div>
     )
+                
+
+
 }
