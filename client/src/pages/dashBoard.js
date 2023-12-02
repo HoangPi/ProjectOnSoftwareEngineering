@@ -83,7 +83,7 @@ export const DashBoard =()=>{
                                     coursename={value.coursename}
                                     tutorid={value.tutorid}
                                     category={value.category}
-                                    description={value.description}
+                                    level={value.level}
                                 />
                                 ))}
                             </div>

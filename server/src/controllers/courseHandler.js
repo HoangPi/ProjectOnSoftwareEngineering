@@ -74,12 +74,18 @@ function getHomeCourse(req,res){
         .then(docs=>{
             res.status(200).json({courses:docs})
         })
+}
+function getTutor(req,res){
     
-    
+    Tutor.findById(req.body.tutorid)
+        .then(docs=>{
+            res.status(200).json({name:docs.name})
+        })
 }
 module.exports={
     AddCourse,
     getTutorCouse,
     getUserCouse,
     getHomeCourse,
+    getTutor,
 }

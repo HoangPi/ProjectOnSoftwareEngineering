@@ -95,3 +95,39 @@ export const GetHomeCourses = async (category)=>{
     return "Fail"
   }
 }
+
+export const GetTutors = async (tutorid)=>{
+  try {
+    const response = await fetch('/gethomecourses/tutor', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({tutorid})
+    });
+    const data = await response.json()
+    return data
+  }
+  catch (error) {
+    return "Fail"
+  }
+}
+
+
+
+// export const GetCategories = async (category)=>{
+//   try {
+//     const response = await fetch('/getcategory', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify({})
+//     });
+//     const data = await response.json()
+//     return data
+//   }
+//   catch (error) {
+//     return "Fail"
+//   }
+// }

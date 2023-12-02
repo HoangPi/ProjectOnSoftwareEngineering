@@ -12,6 +12,9 @@ export const Homepage =()=>{
     const [role,setRole]=useState()
     const [hasSession,setHasSession]=useState(false)
     const [courses,setCourses] = useState([])
+
+
+
     useEffect(() => {
         GetUserSession()
             .then(respone => {
@@ -24,6 +27,7 @@ export const Homepage =()=>{
                 }
                 fetchCourses("Networking")
                 fetchCourses("Web programming")
+                fetchCourses("Game development")
                 
             })
     },[])
@@ -60,30 +64,51 @@ export const Homepage =()=>{
       coursesByCategory[course.category].push(course);
     });
     return (
-        
-
-        <div className="Homepage">
-            {!hasSession ? (
-                // Render tutor-specific content
-                <DefaultNavBar></DefaultNavBar>
-            ) : (<NavigationBar user={user} role={role}></NavigationBar>) }
-            
-                {Object.keys(coursesByCategory).map((category, index) => (
-                    <div key={index} className="New Tech category" style={{ paddingTop: '5%' }}>
-                        <h2>{category} category</h2>
-                        {coursesByCategory[category].map((value, key) => (
-                        <Courses
-                            key={key}
-                            thumbnail={value.thumbnail}
-                            coursename={value.coursename}
-                            tutorid={value.tutorid}
-                            category={value.category}
-                            description={value.description}
-                        />
-                        ))}
-                    </div>
-            ))}
-        </div>
-
-    )
+      <div className="Homepage">
+        {!hasSession ? (
+          // Render tutor-specific content
+          <DefaultNavBar></DefaultNavBar>
+        ) : (
+          <NavigationBar user={user} role={role}></NavigationBar>
+        )}
+  
+        {Object.keys(coursesByCategory).map((category, index) => (
+          <div
+            key={index}
+            className="New Tech category"
+            style={{
+              marginLeft: "50px",
+              marginTop: "50px",
+              marginRight: "50px",
+              backgroundColor: "#ececec",
+              padding: "20px",
+              borderRadius: "22px",
+            }}
+          >
+            <h2 style={{ textAlign: "center" }}>{category} category</h2>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "nowrap",
+                overflowX: "auto",
+                padding: "10px 0",
+              }}
+            >
+              {coursesByCategory[category].map((value, key) => (
+                <Courses
+                  key={key}
+                  thumbnail={value.thumbnail}
+                  coursename={value.coursename}
+                  tutorid={value.tutorid}
+                  category={value.category}
+                  level={value.level}
+                  description={value.description}
+                  studentsid={value.studentsid}
+                />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
 }
