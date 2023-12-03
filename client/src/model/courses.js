@@ -29,7 +29,7 @@ export const Courses = (props) => {
   return (
     <div className="card-container" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <div className="card" id="courseCard" onClick={openModal} style={{ cursor: 'pointer', flex: '1' }}>
-        <img src={props.thumbnail} className="card-img-top" alt="..." />
+        <img src={props.thumbnail} className="card-img-top" alt="..." style={{height:250,objectFit:'cover'}} />
         <div className="card-body">
           <h5 className="card-title" style={{ fontSize: 30, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}} >
             {props.coursename}

@@ -33,7 +33,7 @@ export const Homepage =()=>{
                   
                   // Fetch courses for each category
                   categories.forEach(category => {
-                    fetchCourses(category);
+                    fetchCourses(category.namecategory);
                   });
                 })
                 .catch(error => {
