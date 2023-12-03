@@ -17,7 +17,8 @@ const addcourse = require('./routes/tutorRoutes/addCourse.js')
 const gettutorcourse = require('./routes/tutorRoutes/getTutorCourse.js')
 const getusercourse = require('./routes/userRoutes/getUserCourse.js')
 const gethomecourse = require('./routes/generalRoutes/getHomeCourses.js')
-const gettutor= require('./routes/generalRoutes/getTutors.js')
+const gettutor= require('./routes/generalRoutes/getHomeCourses.js')
+const getcategory= require('./routes/generalRoutes/getHomeCourses.js')
 
 app.use(bodyParser.json());
 app.use((req,res,next)=> {
@@ -39,7 +40,6 @@ app.use('/addcourse',addcourse)
 app.use('/gettutorcourse',gettutorcourse)
 app.use('/getusercourse',getusercourse)
 app.use('/gethomecourses',gethomecourse)
-app.use('/gettutor',gettutor)
 
 // app.listen(port,() => {console.log("Server is running on port 5000")})
 mongoose.connect(databseURI)

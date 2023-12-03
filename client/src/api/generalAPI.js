@@ -113,6 +113,23 @@ export const GetTutors = async (tutorid)=>{
   }
 }
 
+export const GetCategories = async (tutorid)=>{
+  try {
+    const response = await fetch('/gethomecourses/category', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify()
+    });
+    const data = await response.json()
+    return data
+  }
+  catch (error) {
+    return "Fail"
+  }
+}
+
 
 
 // export const GetCategories = async (category)=>{

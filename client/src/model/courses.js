@@ -1,4 +1,5 @@
 import React, { useState,useEffect  } from 'react';
+import {withRouter} from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { GetTutors } from "../api/generalAPI"
 export const Courses = (props) => {
@@ -15,6 +16,9 @@ export const Courses = (props) => {
     }
   }, [props.tutorid]);
   const openModal = () => {
+    if (props.page==="dashboard") {
+      
+    }else
     setModalVisible(true);
   };
 
@@ -23,11 +27,11 @@ export const Courses = (props) => {
   };
 
   return (
-    <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12 product-item" style={{marginRight:20}}>
-      <div className="card" id="courseCard" onClick={openModal} style={{cursor: 'pointer'}}>
+    <div className="card-container" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <div className="card" id="courseCard" onClick={openModal} style={{ cursor: 'pointer', flex: '1' }}>
         <img src={props.thumbnail} className="card-img-top" alt="..." />
         <div className="card-body">
-          <h5 className="card-title" style={{ fontSize: 30 }} >
+          <h5 className="card-title" style={{ fontSize: 30, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}} >
             {props.coursename}
           </h5>
           <h5 className="card-title" style={{ fontStyle: 'oblique' }}>

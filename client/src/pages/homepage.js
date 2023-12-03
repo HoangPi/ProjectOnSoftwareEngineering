@@ -3,7 +3,7 @@ import { GetUserSession, SignOut } from "../api/generalAPI.js"
 import {DefaultNavBar} from "../components/defaultNavBar.js"
 import { useNavigate } from "react-router-dom";
 import { NavigationBar } from "../components/NavBar.js";
-import { GetHomeCourses } from "../api/generalAPI"
+import { GetHomeCourses, GetCategories } from "../api/generalAPI"
 import { Courses } from "../model/courses"
 
 export const Homepage =()=>{
@@ -25,9 +25,20 @@ export const Homepage =()=>{
                     setRole(respone.role)
                     setHasSession(true)
                 }
-                fetchCourses("Networking")
-                fetchCourses("Web programming")
-                fetchCourses("Game development")
+                
+                GetCategories()
+                .then(categoryResponse => {
+                  const categories = categoryResponse.categories;
+                  console.log("Fetched categories:", categories);
+                  
+                  // Fetch courses for each category
+                  categories.forEach(category => {
+                    fetchCourses(category);
+                  });
+                })
+                .catch(error => {
+                  console.error("Error fetching categories:", error);
+                });
                 
             })
     },[])
@@ -37,6 +48,9 @@ export const Homepage =()=>{
         SignOut()
         navigate('/')
     }
+
+
+
     const fetchCourses = (category) => {
         GetHomeCourses(category)
           .then((value) => {
@@ -75,7 +89,7 @@ export const Homepage =()=>{
         {Object.keys(coursesByCategory).map((category, index) => (
           <div
             key={index}
-            className="New Tech category"
+            className="category"
             style={{
               marginLeft: "50px",
               marginTop: "50px",
@@ -83,32 +97,34 @@ export const Homepage =()=>{
               backgroundColor: "#ececec",
               padding: "20px",
               borderRadius: "22px",
+              display: "flex",
+              flexDirection: "column",
             }}
           >
-            <h2 style={{ textAlign: "center" }}>{category} category</h2>
+            <h2 style={{ textAlign: "center" }}>{category}</h2>
             <div
               style={{
-                display: "flex",
-                flexWrap: "nowrap",
-                overflowX: "auto",
-                padding: "10px 0",
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+                gap: "20px",
               }}
             >
               {coursesByCategory[category].map((value, key) => (
-                <Courses
-                  key={key}
-                  thumbnail={value.thumbnail}
-                  coursename={value.coursename}
-                  tutorid={value.tutorid}
-                  category={value.category}
-                  level={value.level}
-                  description={value.description}
-                  studentsid={value.studentsid}
-                />
+                <div key={key} >
+                  <Courses
+                    thumbnail={value.thumbnail}
+                    coursename={value.coursename}
+                    tutorid={value.tutorid}
+                    category={value.category}
+                    level={value.level}
+                    description={value.description}
+                    studentsid={value.studentsid}
+                  />
+                </div>
               ))}
             </div>
           </div>
         ))}
       </div>
     );
-}
+  };

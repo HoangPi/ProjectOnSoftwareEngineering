@@ -15,9 +15,12 @@ export const MiniHeader = (props) => {
                                 <h2 class="mb-0">{props.name}</h2>
                             </div>
                         </div>
-                        <div>
+                        {props.role==="tutor" && (
+                            <div>
                             <a href="/addcourse" class="btn btn-primary d-none d-md-block">Create New Course</a>
                         </div>
+                        )}
+                        
                     </div>
                 </div>
             </div>
