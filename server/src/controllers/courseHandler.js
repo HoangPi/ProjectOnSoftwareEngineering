@@ -70,7 +70,7 @@ function getUserCouse(req,res){
     
 }
 function getHomeCourse(req,res){
-    Teach.find({category:req.body.category})
+    Teach.find({})
         .then(docs=>{
             res.status(200).json({courses:docs})
         }).catch(error => {
@@ -78,17 +78,18 @@ function getHomeCourse(req,res){
             res.status(500).json({ error: "Failed to fetch courses" });
           });
 }
-function getTutor(req,res){
-    Tutor.findById(req.body.tutorid)
-        .then(docs=>{
-            res.status(200).json({name:docs.name})
-        }).catch(error => {
-            console.error("Error fetching tutors:", error);
-            res.status(500).json({ error: "Failed to fetch tutors" });
-          });
-}
+function getTutor(req, res) {
+    Tutor.find({})
+      .then(docs => {
+        res.status(200).json({ tutors:docs });
+      })
+      .catch(error => {
+        console.error("Error fetching categories:", error);
+        res.status(500).json({ error: "Failed to fetch tutors" });
+      });
+  }
 function getCategory(req, res) {
-    Category.find()
+    Category.find({})
       .then(categories => {
         res.status(200).json({ categories });
       })

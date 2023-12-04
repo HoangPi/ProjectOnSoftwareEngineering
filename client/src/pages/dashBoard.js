@@ -88,7 +88,7 @@ export const DashBoard =()=>{
                                     
                                     <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12 product-item" style={{ marginRight: 70, marginTop: 30 }}>
                                         <Link to="/" key={key} style={{ textDecoration:'none',color:'inherit'}}>
-                                        <div className="card-container" style={{ height: '100%' }}>
+                                        <div className="card-container" style={{ height: '100%',width:330 }}>
                                             <Courses
                                             key={key}
                                             thumbnail={value.thumbnail}

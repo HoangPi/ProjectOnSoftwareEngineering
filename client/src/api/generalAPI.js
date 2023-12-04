@@ -79,14 +79,14 @@ export const UpdateProfile = async (name, titles, role, file, accountid)=>{
   }
 }
 
-export const GetHomeCourses = async (category)=>{
+export const GetHomeCourses = async ()=>{
   try {
     const response = await fetch('/gethomecourses', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({category})
+      body: JSON.stringify({})
     });
     const data = await response.json()
     return data
@@ -96,14 +96,14 @@ export const GetHomeCourses = async (category)=>{
   }
 }
 
-export const GetTutors = async (tutorid)=>{
+export const GetTutors = async ()=>{
   try {
     const response = await fetch('/gethomecourses/tutor', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({tutorid})
+      body: JSON.stringify({})
     });
     const data = await response.json()
     return data
@@ -113,7 +113,7 @@ export const GetTutors = async (tutorid)=>{
   }
 }
 
-export const GetCategories = async (tutorid)=>{
+export const GetCategories = async ()=>{
   try {
     const response = await fetch('/gethomecourses/category', {
       method: 'POST',
@@ -130,21 +130,3 @@ export const GetCategories = async (tutorid)=>{
   }
 }
 
-
-
-// export const GetCategories = async (category)=>{
-//   try {
-//     const response = await fetch('/getcategory', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify({})
-//     });
-//     const data = await response.json()
-//     return data
-//   }
-//   catch (error) {
-//     return "Fail"
-//   }
-// }

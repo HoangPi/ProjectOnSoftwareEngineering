@@ -1,20 +1,7 @@
 import React, { useState,useEffect  } from 'react';
-import {withRouter} from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { GetTutors } from "../api/generalAPI"
 export const Courses = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [tutorName, setTutorName] = useState(null);
-  useEffect(() => {
-    if (props.tutorid) {
-        GetTutors(props.tutorid).then((value)=>{
-            setTutorName(value.name)
-        }
-        ).catch((error) => {
-            console.error(`Error fetching ${props.tutorid} tutor:`, error);
-          });
-    }
-  }, [props.tutorid]);
+  
   const openModal = () => {
     if (props.page==="dashboard") {
       
@@ -70,7 +57,7 @@ export const Courses = (props) => {
                     <span className="label" style={{width:85,display: 'inline-block'}}>Level:</span> {props.level}
                 </p>
                 <p className="card-text">
-                    <span className="label"style={{width:85,display: 'inline-block'}}>Tutor:</span> {tutorName}
+                    <span className="label"style={{width:85,display: 'inline-block'}}>Tutor:</span> {props.tutorname}
                 </p>
                 <p className="card-text">
                     <span className="label"style={{width:85,display: 'inline-block'}}>Description:</span> {props.description}
