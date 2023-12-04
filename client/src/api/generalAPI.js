@@ -98,7 +98,7 @@ export const GetHomeCourses = async ()=>{
 
 export const GetTutors = async ()=>{
   try {
-    const response = await fetch('/gethomecourses/tutor', {
+    const response = await fetch('/gettutor', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -115,7 +115,23 @@ export const GetTutors = async ()=>{
 
 export const GetCategories = async ()=>{
   try {
-    const response = await fetch('/gethomecourses/category', {
+    const response = await fetch('/getcategory', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify()
+    });
+    const data = await response.json()
+    return data
+  }
+  catch (error) {
+    return "Fail"
+  }
+}
+export const GetStudents = async ()=>{
+  try {
+    const response = await fetch('/getstudent', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

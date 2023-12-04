@@ -3,7 +3,7 @@ import { GetUserSession, SignOut } from "../api/generalAPI.js";
 import { DefaultNavBar } from "../components/defaultNavBar.js";
 import { useNavigate } from "react-router-dom";
 import { NavigationBar } from "../components/NavBar.js";
-import { GetHomeCourses, GetCategories, GetTutors } from "../api/generalAPI";
+import { GetHomeCourses, GetCategories, GetTutors ,GetStudents} from "../api/generalAPI";
 import { Courses } from "../model/courses";
 
 export const Homepage = () => {
@@ -14,46 +14,48 @@ export const Homepage = () => {
   const [coursesByCategory, setCoursesByCategory] = useState({});
   const [tutors, setTutors] = useState([]);
 
+  const link="./login"
 
   useEffect(() => {
     GetUserSession().then((response) => {
       console.log(response);
       if (response.userinfo !== null && typeof response.userinfo !== "undefined") {
-        console.log(response.userinfo);
+        console.log("Fetching session:",response.userinfo);
         setUser(response.userinfo);
         setRole(response.role);
         setHasSession(true);
       }
-
-      Promise.all([GetCategories(), GetHomeCourses(),GetTutors()]) // Fetch categories and courses together
-        .then(([categoryResponse, coursesResponse, tutorsResponse]) => {
-          const categories = categoryResponse.categories;
-          const courses = coursesResponse.courses;
-          const tutors=tutorsResponse.tutors;
-          console.log("Fetched categories:", categories);
-          console.log("Fetched courses:", courses);
-          console.log("Fetched tutors:", tutors);
-
-          
-          setTutors(tutors);
-          // Group courses by category
-          const coursesByCategory = {};
-          categories.forEach((category) => {
-            coursesByCategory[category.namecategory] = courses.filter(
-              (course) => course.category === category.namecategory
-            );
-          });
-
-          setCoursesByCategory(coursesByCategory);
-        })
-        .catch((error) => {
-          console.error("Error fetching categories and courses:", error);
-        });
+      
     });
   }, []);
 
-
-
+  useEffect(() => {
+    Promise.all([GetCategories(), GetHomeCourses(),GetTutors()])
+      .then(([categoryResponse, coursesResponse, tutorsRespose]) => {
+        const categories = categoryResponse.categories;
+        const courses = coursesResponse.courses;
+        const tutors = tutorsRespose.tutors;
+  
+        console.log("Fetched categories:", categories);
+        console.log("Fetched courses:", courses);
+        console.log("Fetched tutors:", tutors);
+  
+        // Group courses by category
+        const coursesByCategory = {};
+        categories.forEach((category) => {
+          coursesByCategory[category.namecategory] = courses.filter(
+            (course) => course.category === category.namecategory
+          );
+        });
+  
+        setCoursesByCategory(coursesByCategory);
+        setTutors(tutors);
+      })
+      .catch((error) => {
+        console.error("Error fetching categories and courses:", error);
+      });
+  }, []);
+  
 
 
   const handleSignOut = () => {
@@ -99,6 +101,7 @@ export const Homepage = () => {
               return (
                 <div key={key}>
                   <Courses
+                    courseid={value._id}
                     thumbnail={value.thumbnail}
                     coursename={value.coursename}
                     tutorid={value.tutorid}
@@ -107,6 +110,7 @@ export const Homepage = () => {
                     level={value.level}
                     description={value.description}
                     studentsid={value.studentsid}
+                    userid={user ? user.accountid: ""}
                   />
                 </div>
               );

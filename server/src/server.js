@@ -17,9 +17,10 @@ const addcourse = require('./routes/tutorRoutes/addCourse.js')
 const gettutorcourse = require('./routes/tutorRoutes/getTutorCourse.js')
 const getusercourse = require('./routes/userRoutes/getUserCourse.js')
 const gethomecourse = require('./routes/generalRoutes/getHomeCourses.js')
-const gettutor= require('./routes/generalRoutes/getHomeCourses.js')
-const getcategory= require('./routes/generalRoutes/getHomeCourses.js')
-
+const gettutor= require('./routes/generalRoutes/getTutor.js')
+const getcategory= require('./routes/generalRoutes/getCategory.js')
+const getstudent= require('./routes/generalRoutes/getStudent.js')
+const registercourse= require('./routes/userRoutes/registerCourse.js')
 app.use(bodyParser.json());
 app.use((req,res,next)=> {
     console.log(`${req.method} ${req.url}`);
@@ -40,6 +41,10 @@ app.use('/addcourse',addcourse)
 app.use('/gettutorcourse',gettutorcourse)
 app.use('/getusercourse',getusercourse)
 app.use('/gethomecourses',gethomecourse)
+app.use('/gettutor',gettutor)
+app.use('/getstudent',getstudent)
+app.use('/getcategory',getcategory)
+app.use('/registercourse',registercourse)
 
 // app.listen(port,() => {console.log("Server is running on port 5000")})
 mongoose.connect(databseURI)

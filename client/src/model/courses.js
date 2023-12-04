@@ -1,4 +1,5 @@
 import React, { useState,useEffect  } from 'react';
+import {RegisterCourse} from "../api/userAPI"
 export const Courses = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
   
@@ -11,6 +12,22 @@ export const Courses = (props) => {
 
   const closeModal = () => {
     setModalVisible(false);
+  };
+  const registerBtn=async ()=>{
+    if(props.userid!=""){
+      const response = await RegisterCourse(props.userid, props.courseid);
+      if (response.message) {
+        window.alert(response.message);
+        if (response.success) {
+          window.location.reload();
+        }
+      } else {
+        window.alert('Failed to register for the course.');
+      }
+    }
+    else{
+      window.location.href = '/signin';
+    }
   };
 
   return (
@@ -71,7 +88,7 @@ export const Courses = (props) => {
                 <button type="button" className="btn btn-secondary" onClick={closeModal}>
                   Cancel
                 </button>
-                <button type="button" className="btn btn-primary">
+                <button type="button" className="btn btn-primary" onClick={registerBtn}>
                   Register
                 </button>
               </div>
