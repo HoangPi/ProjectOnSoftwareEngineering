@@ -6,11 +6,11 @@ import { } from "./components/User.js"
 import React, { useEffect, useState } from 'react'
 // import * as api from './api/apiColections.js'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import Homepage  from './pages/homepage';
 import { Signup } from './pages/signup';
 import { Profile } from './pages/profile.js';
 import {SignInPage} from './pages/signin.js'
 import { DashBoard } from './pages/dashBoard.js';
+import { Homepage } from './pages/homepage.js';
 import { TestPage } from './pages/test.js';
 import { AddCourse } from './pages/addcourse.js';
 
@@ -54,6 +54,7 @@ function App() {
           <Route path='/signin' element={<SignInPage/>}/>
           <Route path='/profile' element={<Profile/>}></Route>
           <Route path='/dashboard' element={<DashBoard/>}></Route>
+          <Route path='/home' element={<Homepage/>}></Route>
           <Route path='/addcourse' element={<AddCourse></AddCourse>}></Route>
         </Routes>
       </Router>
