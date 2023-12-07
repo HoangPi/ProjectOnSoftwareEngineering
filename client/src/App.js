@@ -13,6 +13,7 @@ import { DashBoard } from './pages/dashBoard.js';
 import { Homepage } from './pages/homepage.js';
 import { TestPage } from './pages/test.js';
 import { AddCourse } from './pages/addcourse.js';
+import LessonEditor from './pages/lesson_editor.js'
 
 
 // import Header from './components/header.js';
@@ -56,6 +57,7 @@ function App() {
           <Route path='/dashboard' element={<DashBoard/>}></Route>
           <Route path='/home' element={<Homepage/>}></Route>
           <Route path='/addcourse' element={<AddCourse></AddCourse>}></Route>
+          <Route path='/lessonEditor' element={<LessonEditor></LessonEditor>}></Route>
         </Routes>
       </Router>
       {/* </div> */}
