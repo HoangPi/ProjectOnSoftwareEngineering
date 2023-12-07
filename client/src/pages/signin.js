@@ -20,6 +20,16 @@ export const SignInPage = () => {
                 respone.signin ? navigate('/') : alert("Sign in information is incorrect")
             })
     }
+    const handleSignUp=(ev)=>{
+        ev.preventDefault()
+        window.location.href = '/signup';
+        
+    }
+    const handleForgot=(ev)=>{
+        ev.preventDefault()
+        window.location.href = '/forgotpassword';
+        
+    }
     useEffect(()=>{
         //The do nothing but preventing the page from reloading
     },[])
@@ -45,7 +55,27 @@ export const SignInPage = () => {
                             Remember me
                         </label>
                     </div>
-                    <button onClick={handleSignIn} class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+                    
+                    <div className="btn-group w-100" role="group" aria-label="Button Group">
+                        <button onClick={handleSignIn} className="btn btn-primary w-100 py-2 btn-3d" style={{
+                            border: 'none',
+                            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+                            transform: 'translateY(0)',
+                            transition: 'transform 0.2s ease-in-out',
+                        }}>Sign in</button>
+                        <button onClick={handleSignUp} className="btn btn-secondary w-100 py-2 btn-3d" style={{
+                            border: 'none',
+                            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+                            transform: 'translateY(0)',
+                            transition: 'transform 0.2s ease-in-out',
+                        }}>Sign up</button>
+                        <button onClick={handleForgot} className="btn btn-light w-100 py-2 btn-3d" style={{
+                            border: 'none',
+                            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+                            transform: 'translateY(0)',
+                            transition: 'transform 0.2s ease-in-out',
+                        }}>Forgot password</button>
+                    </div>
                     <p class="mt-5 mb-3 text-body-secondary">© 2017–2023</p>
                 </form>
             </main>

@@ -12,6 +12,7 @@ export const DashBoard =()=>{
     const navigate = useNavigate()
     const [user,setUser] = useState()
     const [role,setRole] = useState()
+    const [avatar, setAvatar]= useState();
     const [isLoading,setIsLoading] = useState(true)
     const [courses,setCourses] = useState([])
     useEffect(()=>{
@@ -24,6 +25,7 @@ export const DashBoard =()=>{
                     if(response.role==='tutor'){
                         setUser(response.userinfo)
                         setRole(response.role)
+                        setAvatar(response.userinfo.avatar)
                         getTutorCourses()
                             .then(value=>{
                                 setCourses(value.courses)
@@ -36,6 +38,7 @@ export const DashBoard =()=>{
                     if(response.role==='student'){
                         setUser(response.userinfo)
                         setRole(response.role)
+                        setAvatar(response.userinfo.avatar)
                         getUserCourses()
                             .then(value=>{
                                 setCourses(value.courses)
@@ -54,7 +57,7 @@ export const DashBoard =()=>{
     </div>
     return(
         <div>
-            <NavigationBar user={user} role={role}></NavigationBar>
+            <NavigationBar user={user} role={role}avatar = {avatar}></NavigationBar>
             <MiniHeader avatar={user.avatar} name={user.name} role = {role}></MiniHeader>
             <nav aria-label="breadcrumb" style={{marginLeft:85}}>
                 <ol class="breadcrumb">

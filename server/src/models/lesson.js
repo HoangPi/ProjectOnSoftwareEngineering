@@ -9,6 +9,11 @@ const lessonSchema= mongoose.Schema({
         type:String,
         required:true,
     },
+    part:{
+        type:String,
+        required:true,
+    }
+    
 },{timestamps: true});
 
 const Lesson = mongoose.model('lesson',lessonSchema)
