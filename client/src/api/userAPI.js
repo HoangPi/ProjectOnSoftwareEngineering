@@ -48,3 +48,21 @@ export const RegisterCourse = async (userid,courseid)=>{
       return { message: 'Fail' };
     }
 }
+
+
+export const GetLessons = async (lessonId)=>{
+  try {
+      const response = await fetch('/getlesson', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ lessonId})
+      });
+      const data = await response.json();
+      return data
+    }
+    catch (error) {
+      return { message: 'Fail' };
+    }
+}
