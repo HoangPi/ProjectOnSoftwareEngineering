@@ -88,7 +88,7 @@ export const Profile = () => {
     </div>
     return (
         <div>
-            <NavigationBar user={user} role={role}></NavigationBar>
+            <NavigationBar user={user} role={role} avatar={file}></NavigationBar>
             <div style={{ marginLeft: '13%', marginRight: '10%', marginBottom:'50px' }} class="col-lg-9 col-md-8 col-12">
                 {/* <!-- Card --> */}
                 <div class="card">

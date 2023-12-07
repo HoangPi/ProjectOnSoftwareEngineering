@@ -10,11 +10,13 @@ import { getUserCourses } from "../api/userAPI"
 
 export const DashBoard = () => {
     const navigate = useNavigate()
-    const [user, setUser] = useState()
-    const [role, setRole] = useState()
-    const [isLoading, setIsLoading] = useState(true)
-    const [courses, setCourses] = useState([])
-    useEffect(() => {
+    const [user,setUser] = useState()
+    const [role,setRole] = useState()
+    const [avatar, setAvatar]= useState();
+    const [isLoading,setIsLoading] = useState(true)
+    const [courses,setCourses] = useState([])
+    useEffect(()=>{
+
         GetUserSession()
             .then((response) => {
                 if (typeof (response.userinfo) === 'undefined' || response.userinfo === null) {
@@ -24,6 +26,7 @@ export const DashBoard = () => {
                     if (response.role === 'tutor') {
                         setUser(response.userinfo)
                         setRole(response.role)
+                        setAvatar(response.userinfo.avatar)
                         getTutorCourses()
                             .then(value => {
                                 setCourses(value.courses)
@@ -36,6 +39,7 @@ export const DashBoard = () => {
                     if (response.role === 'student') {
                         setUser(response.userinfo)
                         setRole(response.role)
+                        setAvatar(response.userinfo.avatar)
                         getUserCourses()
                             .then(value => {
                                 setCourses(value.courses)
@@ -54,9 +58,11 @@ export const DashBoard = () => {
     </div>
     return (
         <div>
-            <NavigationBar user={user} role={role}></NavigationBar>
-            <MiniHeader avatar={user.avatar} name={user.name} role={role}></MiniHeader>
-            <nav aria-label="breadcrumb" style={{ marginLeft: 85 }}>
+
+            <NavigationBar user={user} role={role}avatar = {avatar}></NavigationBar>
+            <MiniHeader avatar={user.avatar} name={user.name} role = {role}></MiniHeader>
+            <nav aria-label="breadcrumb" style={{marginLeft:85}}>
+
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">DashBoard</li>
@@ -113,18 +119,20 @@ export const DashBoard = () => {
                                 {courses.map((value, key) => (
 
                                     <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12 product-item" style={{ marginRight: 70, marginTop: 30 }}>
-                                        <Link to="/" key={key} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                            <div className="card-container" style={{ height: '100%' }}>
-                                                <Courses
-                                                    key={key}
-                                                    thumbnail={value.thumbnail}
-                                                    coursename={value.coursename}
-                                                    tutorid={value.tutorid}
-                                                    category={value.category}
-                                                    level={value.level}
-                                                    page="dashboard"
-                                                />
-                                            </div>
+
+                                        <Link to="/" key={key} style={{ textDecoration:'none',color:'inherit'}}>
+                                        <div className="card-container" style={{ height: '100%',width:330 }}>
+                                            <Courses
+                                            key={key}
+                                            thumbnail={value.thumbnail}
+                                            coursename={value.coursename}
+                                            tutorid={value.tutorid}
+                                            category={value.category}
+                                            level={value.level}
+                                            page="dashboard"
+                                        />
+                                        </div>
+
                                         </Link>
                                     </div>
                                 ))}

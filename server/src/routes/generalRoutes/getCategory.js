@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { getHomeCourse} = require('../../controllers/courseHandler.js');
+const { getCategory} = require('../../controllers/categoryHandler.js');
 
 router.use((req,res,next)=>{
     next()
 })
 
-router.post("/",getHomeCourse)
+router.post("/",getCategory)
 module.exports = router;
