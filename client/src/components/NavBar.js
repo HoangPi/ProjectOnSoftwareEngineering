@@ -1,13 +1,19 @@
 import { useNavigate } from "react-router-dom"
 import { SignOut } from "../api/generalAPI"
-
+import React, { useState } from "react";
 export const NavigationBar = (props) => {
+    const [searchQuery, setSearchQuery] = useState("");
     const navigate = useNavigate()
     const handleSignOut=()=>{
         // console.log('Sign Out')
         SignOut()
         navigate('/')
     }
+    const handleSearch = (event) => {
+        event.preventDefault(); // Prevent form submission
+        setSearchQuery(event.target.value);
+        navigate(`/courses?search=${searchQuery}`);
+      };
     let role="Student";
     if (props.role==="tutor") role = "Tutor";
 
@@ -67,9 +73,16 @@ export const NavigationBar = (props) => {
                                 <a class="nav-link active" aria-current="page" href="/courses">Courses</a>
                             </li>
                         </ul>
-                        <form class="d-flex mt-3" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        <form className="d-flex mt-3" role="search">
+                            <input
+                            className="form-control me-2"
+                            type="search"
+                            placeholder="Search"
+                            aria-label="Search"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            />
+                            <button className="btn btn-outline-success" type="submit" onClick={handleSearch}>Search</button>
                         </form>
                     </div>
                 </div>
