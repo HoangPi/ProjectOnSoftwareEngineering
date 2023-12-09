@@ -2,7 +2,12 @@ export const DefaultNavBar = ()=>{
     return(
         <nav class="navbar bg-body-tertiary fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Udemy</a>
+                <a class="navbar-brand" href="#">Online Academy</a>
+                <div class="me-2 position-relative d-flex justify-content-end mt-n5">
+                    <a href="/">
+                        <img src="https://i.imgur.com/Y5wXAX5.png" height='60px' width='80px' class="avatar-xl position-relative" alt="avatar" />
+                    </a>
+                </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -21,6 +26,9 @@ export const DefaultNavBar = ()=>{
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="/signup">Sign up</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/courses">Courses</a>
                             </li>
                         </ul>
                     </div>

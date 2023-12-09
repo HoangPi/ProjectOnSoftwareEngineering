@@ -14,6 +14,7 @@ export const Homepage = () => {
   const [hasSession, setHasSession] = useState(false);
   const [coursesByCategory, setCoursesByCategory] = useState({});
   const [tutors, setTutors] = useState([]);
+  const [sortBy, setSortBy] = useState("default");
   const [isLoading, setIsLoading] = useState(true); // Loading state
 
   const link = "./login";
@@ -28,8 +29,6 @@ export const Homepage = () => {
                 setRole(respone.role)
                 setHasSession(true)
                 setAvatar(respone.userinfo.avatar)
-                
-                
             }
 
         })
@@ -125,7 +124,7 @@ export const Homepage = () => {
                       level={value.level}
                       description={value.description}
                       studentsid={value.studentsid}
-                      userid={user ? user.accountid : ""}
+                      userid={user ? user._id : ""}
                     />
                   </div>
                 );

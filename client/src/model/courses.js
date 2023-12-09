@@ -2,6 +2,18 @@ import React, { useState,useEffect  } from 'react';
 import {RegisterCourse} from "../api/userAPI"
 export const Courses = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(false);
+  
+  useEffect(() => {
+    if (props.page!=="dashboard") {
+      if (props.studentsid.includes(props.userid)) {
+        setIsRegistered(true);
+      } else {
+        setIsRegistered(false);
+      }
+    }
+  }, [props.studentsid, props.userid]);
+
   
   const openModal = () => {
     if (props.page==="dashboard") {
@@ -88,9 +100,15 @@ export const Courses = (props) => {
                 <button type="button" className="btn btn-secondary" onClick={closeModal}>
                   Cancel
                 </button>
-                <button type="button" className="btn btn-primary" onClick={registerBtn}>
-                  Register
-                </button>
+                {isRegistered ? (
+                  <button type="button" className="btn btn-success" disabled>
+                    Registered
+                  </button>
+                ) : (
+                  <button type="button" className="btn btn-primary" onClick={registerBtn}>
+                    Register
+                  </button>
+                )}
               </div>
             </div>
           </div>
