@@ -125,6 +125,7 @@ export const Homepage = () => {
                       description={value.description}
                       studentsid={value.studentsid}
                       userid={user ? user._id : ""}
+                      
                     />
                   </div>
                 );

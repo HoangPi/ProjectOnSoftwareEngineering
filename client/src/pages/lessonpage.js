@@ -11,13 +11,14 @@ export const LessonPage =()=>{
     const [user,setUser] = useState()
     const [role,setRole] = useState()
     const [content,setContent] = useState()
-    const [courseId,setCourseId] = useState()
-    const [part,setPart] = useState()
+    // const [courseId,setCourseId] = useState()
+    // const [part,setPart] = useState()
     const [name,setName] = useState()
     const [isLoading,setIsLoading] = useState(true)
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const lessonId = queryParams.get('c');
+    const course = queryParams.get('courseId');
+    const part = queryParams.get('part');
     
     useEffect(()=>{
         GetUserSession()
@@ -30,13 +31,11 @@ export const LessonPage =()=>{
                     setUser(response.userinfo)
                     setRole(response.role)
                     setIsLoading(false)
-                    GetLessons(lessonId)
+                    GetLessons(course,part)
                             .then(lessonData => {
                                 const lessoninfo = lessonData.lesson
                                 console.log(lessoninfo.courseid)
                                 setContent(lessoninfo.content)
-                                setCourseId(lessoninfo.courseid)
-                                setPart(lessoninfo.part)
                                 setName(lessoninfo.namelesson)
                             })
                 }
@@ -47,6 +46,17 @@ export const LessonPage =()=>{
         const match = url.match(regex);
         return match ? match[1] : null;}
     const videoId = content ? extractVideoId(content) : null;
+
+    const nextLesson = () => {
+        const incrementedPart = String(Number(part) + 1);
+        window.location.href = `/lessonpage?courseId=${course}&part=${incrementedPart}`;
+    };
+    const previousLesson = () => {
+        const decrementedPart = String(Number(part) - 1);
+        window.location.href = `/lessonpage?courseId=${course}&part=${decrementedPart}`;
+    };
+    const isPreviousButtonDisabled = part === "0";
+
     if (isLoading) return <div class="d-flex align-items-center">
         <strong role="status">Loading...</strong>
         <div class="spinner-border ms-auto" aria-hidden="true"></div>
@@ -89,13 +99,19 @@ export const LessonPage =()=>{
                             boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
                             transform: 'translateY(0)',
                             transition: 'transform 0.2s ease-in-out',
-                        }}>Previous</button>
+                        }}
+                            disabled={isPreviousButtonDisabled}
+                        onClick={previousLesson}
+                            >Previous</button>
+                        
                         <button className="btn btn-primary w-100 py-2 btn-3d" style={{
                             border: 'none',
                             boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
                             transform: 'translateY(0)',
                             transition: 'transform 0.2s ease-in-out',
-                        }}>Next</button>
+                        }}
+                        onClick={nextLesson}
+                            >Next</button>
                     </div>
 
                 </nav>

@@ -1,6 +1,8 @@
 import React, { useState,useEffect  } from 'react';
+import { useNavigate , Link} from "react-router-dom"
 import {RegisterCourse} from "../api/userAPI"
 export const Courses = (props) => {
+  const navigate = useNavigate()
   const [modalVisible, setModalVisible] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
   
@@ -15,9 +17,10 @@ export const Courses = (props) => {
   }, [props.studentsid, props.userid]);
 
   
-  const openModal = () => {
+  const openModal = (event) => {
+    event.stopPropagation();
     if (props.page==="dashboard") {
-      
+      navigate(`/lessonpage?courseId=${props.courseid}&part=0`);
     }else
     setModalVisible(true);
   };

@@ -13,7 +13,7 @@ export const NavigationBar = (props) => {
         event.preventDefault(); // Prevent form submission
         setSearchQuery(event.target.value);
         navigate(`/courses?search=${searchQuery}`);
-      };
+    };
     let role="Student";
     if (props.role==="tutor") role = "Tutor";
 

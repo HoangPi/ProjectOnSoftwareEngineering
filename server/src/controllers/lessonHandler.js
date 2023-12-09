@@ -3,11 +3,12 @@ const Lesson = require("../models/lesson.js")
 
 
 function getLesson(req, res) {
-    const lessonId=req.body.lessonId
-    Lesson.findOne({_id:lessonId})
+    const courseIdlesson=req.body.courseIdlesson
+    const partlesson=req.body.partlesson
+    Lesson.findOne({courseid:courseIdlesson,part:partlesson  })
       .then(docs => {
         if (!docs) {
-            console.log("lessonId:",lessonId);
+            console.log("lsessonId:",Lesson._id);
           return res.status(404).json({ message: "Lesson not found" });
         }
         

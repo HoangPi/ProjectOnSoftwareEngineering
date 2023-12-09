@@ -130,6 +130,7 @@ export const DashBoard = () => {
                                             category={value.category}
                                             level={value.level}
                                             page="dashboard"
+                                            courseid={value._id}
                                         />
                                         </div>
 

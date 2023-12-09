@@ -50,14 +50,14 @@ export const RegisterCourse = async (userid,courseid)=>{
 }
 
 
-export const GetLessons = async (lessonId)=>{
+export const GetLessons = async (courseIdlesson,partlesson)=>{
   try {
       const response = await fetch('/getlesson', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ lessonId})
+        body: JSON.stringify({ courseIdlesson,partlesson})
       });
       const data = await response.json();
       return data
