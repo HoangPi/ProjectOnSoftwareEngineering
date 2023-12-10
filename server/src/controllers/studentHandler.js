@@ -14,5 +14,4 @@ function getStudent(req, res) {
 
   module.exports = {
     getStudent,
-    
 }

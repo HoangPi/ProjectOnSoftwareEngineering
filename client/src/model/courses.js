@@ -1,11 +1,26 @@
 import React, { useState,useEffect  } from 'react';
+import { useNavigate , Link} from "react-router-dom"
 import {RegisterCourse} from "../api/userAPI"
 export const Courses = (props) => {
+  const navigate = useNavigate()
   const [modalVisible, setModalVisible] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(false);
   
-  const openModal = () => {
+  useEffect(() => {
+    if (props.page!=="dashboard") {
+      if (props.studentsid.includes(props.userid)) {
+        setIsRegistered(true);
+      } else {
+        setIsRegistered(false);
+      }
+    }
+  }, [props.studentsid, props.userid]);
+
+  
+  const openModal = (event) => {
+    
     if (props.page==="dashboard") {
-      
+      navigate(`/lessonpage?courseId=${props.courseid}&part=0`);
     }else
     setModalVisible(true);
   };
@@ -88,9 +103,15 @@ export const Courses = (props) => {
                 <button type="button" className="btn btn-secondary" onClick={closeModal}>
                   Cancel
                 </button>
-                <button type="button" className="btn btn-primary" onClick={registerBtn}>
-                  Register
-                </button>
+                {isRegistered ? (
+                  <button type="button" className="btn btn-success" disabled>
+                    Registered
+                  </button>
+                ) : (
+                  <button type="button" className="btn btn-primary" onClick={registerBtn}>
+                    Register
+                  </button>
+                )}
               </div>
             </div>
           </div>
