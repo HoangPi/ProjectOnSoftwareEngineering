@@ -62,7 +62,12 @@ export const DashBoard = () => {
             <NavigationBar user={user} role={role}avatar = {avatar}></NavigationBar>
             <MiniHeader avatar={user.avatar} name={user.name} role = {role}></MiniHeader>
             <nav aria-label="breadcrumb" style={{marginLeft:85}}>
-
+                <style>
+                    {`
+                    a {color: inherit;text-decoration: none;}
+                    a:hover {text-decoration: none;background-color:#daf0ff;border-radius:30px}
+                    `}
+                </style>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">DashBoard</li>
@@ -71,8 +76,6 @@ export const DashBoard = () => {
             {role === "tutor" ? (
                 // Render tutor-specific content
                 <div>
-
-
                     <div style={{ paddingLeft: '20%' }} class="col-lg-9 col-md-8 col-12">
                         <div class="card mb-4">
                             <div class="card-header">
@@ -89,8 +92,7 @@ export const DashBoard = () => {
                                             <th>Chapters</th>
                                             <th>Status</th>
                                             <th></th>
-                                        </tr>
-                                        
+                                        </tr>    
                                     </thead>
                                     {courses.map((value, key) => (
                                             
@@ -107,7 +109,6 @@ export const DashBoard = () => {
                             </div>
                         </div>
                     </div>
-
                 </div>
             ) : (
                 // Render student-specific content
@@ -117,10 +118,7 @@ export const DashBoard = () => {
                         <div className="container" style={{ flex: '1 1 auto' }}>
                             <div className="row" style={{ display: 'flex', flexWrap: 'wrap' }}>
                                 {courses.map((value, key) => (
-
                                     <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12 product-item" style={{ marginRight: 70, marginTop: 30 }}>
-
-                                        <Link to="/" key={key} style={{ textDecoration:'none',color:'inherit'}}>
                                         <div className="card-container" style={{ height: '100%',width:330 }}>
                                             <Courses
                                             key={key}
@@ -133,8 +131,6 @@ export const DashBoard = () => {
                                             courseid={value._id}
                                         />
                                         </div>
-
-                                        </Link>
                                     </div>
                                 ))}
                             </div>

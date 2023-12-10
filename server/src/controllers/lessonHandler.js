@@ -11,7 +11,6 @@ function getLesson(req, res) {
             console.log("lsessonId:",Lesson._id);
           return res.status(404).json({ message: "Lesson not found" });
         }
-        
         res.status(200).json({ lesson:docs });
       })
       .catch(error => {
@@ -19,8 +18,6 @@ function getLesson(req, res) {
         res.status(500).json({ error: "Failed to fetch lesson" });
       });
   }
-
   module.exports = {
     getLesson,
-
 }

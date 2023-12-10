@@ -66,3 +66,37 @@ export const GetLessons = async (courseIdlesson,partlesson)=>{
       return { message: 'Fail' };
     }
 }
+
+export const GetComments = async (lessonid)=>{
+  try {
+      const response = await fetch('/getcomment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ lessonid})
+      });
+      const data = await response.json();
+      return data
+    }
+    catch (error) {
+      return { message: 'Fail' };
+    }
+}
+
+export const AddComment = async (content,userid,lessonid)=>{
+  try {
+      const response = await fetch('/getcomment/addcomment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ content,userid,lessonid})
+      });
+      const data = await response.json();
+      return data
+    }
+    catch (error) {
+      return { message: 'Fail' };
+    }
+}

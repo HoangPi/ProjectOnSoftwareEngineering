@@ -18,7 +18,7 @@ export const Courses = (props) => {
 
   
   const openModal = (event) => {
-    event.stopPropagation();
+    
     if (props.page==="dashboard") {
       navigate(`/lessonpage?courseId=${props.courseid}&part=0`);
     }else

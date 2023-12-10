@@ -78,6 +78,15 @@ function getHomeCourse(req,res){
             res.status(500).json({ error: "Failed to fetch courses" });
           });
 }
+function getChapter(req,res){
+    Teach.find({})
+        .then(docs=>{
+            res.status(200).json({courses:docs})
+        }).catch(error => {
+            console.error("Error fetching courses:", error);
+            res.status(500).json({ error: "Failed to fetch courses" });
+          });
+}
 
 function registerCourse(req, res) {
     
