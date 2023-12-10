@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom"
 import { MiniHeader } from "../components/miniHeader"
 import { CourseList } from "../components/courseList"
 import { Courses } from "../model/courses"
-import { getTutorCourses } from "../api/tutorAPI"
+import { getChaptersAndContent, getTutorCourses } from "../api/tutorAPI"
 import { getUserCourses } from "../api/userAPI"
 
 export const DashBoard = () => {
@@ -15,6 +15,8 @@ export const DashBoard = () => {
     const [avatar, setAvatar]= useState();
     const [isLoading,setIsLoading] = useState(true)
     const [courses,setCourses] = useState([])
+    const [courseLength,setCourseLength] = useState([])
+
     useEffect(()=>{
 
         GetUserSession()
@@ -28,9 +30,17 @@ export const DashBoard = () => {
                         setRole(response.role)
                         setAvatar(response.userinfo.avatar)
                         getTutorCourses()
-                            .then(value => {
+                            .then(async (value) => {
+                                let temp = []
+                                for(let course of value.courses){
+                                    let chapters = await getChaptersAndContent(course._id)
+                                    console.log(Object.keys(chapters.chapters).length)
+                                    temp.push(Object.keys(chapters.chapters).length)
+                                }
+                                setCourseLength(temp)
+                                console.log(temp)
                                 setCourses(value.courses)
-                                console.log(value.courses)
+                                // console.log(value.courses)
                                 setIsLoading(false)
                             })
 
@@ -90,16 +100,16 @@ export const DashBoard = () => {
                                             <th>Status</th>
                                             <th></th>
                                         </tr>
-                                        
                                     </thead>
+                                    {/* {console.log(courseLength)} */}
                                     {courses.map((value, key) => (
-                                            
                                             <CourseList
                                                 id={value._id}
                                                 key={key}
                                                 thumbnail={value.thumbnail}
                                                 coursename={value.coursename}
                                                 level={value.level}
+                                                length = {courseLength[key]}
                                                 studentsid={value.studentsid}
                                             />
                                         ))}

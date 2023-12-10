@@ -4,6 +4,8 @@ const User = require("../models/user.js")
 const Teach = require('../models/teach.js')
 const Lesson = require('../models/lesson.js')
 const Category = require('../models/category.js')
+const Chapter = require('../models/chapter.js')
+const Content = require('../models/content.js')
 function AddCourse(req,res){
     if(req.session.role==='tutor'){
         try{
@@ -111,7 +113,73 @@ function registerCourse(req, res) {
         res.status(500).json({ message: "Error finding course", error });
       });
   }
+async function getCourseDetail(req,res){
+    try{
+        if(req.session.role==='tutor'){
+            const chapters = await Chapter.find({course:req.body.courseid})
+            for(let i in chapters){
+                let temp = await Content.find({chapter:chapters[i]._id})
+                if(Object.keys(temp).length<=0){
+                    chapters[i]._doc.contents={content:[]}
+                }
+                else chapters[i]._doc.contents=temp
+            }
+            console.log(chapters)
+            let r = []
+            for(let c of chapters){
+                r = [...r,{
+                    name:c._doc.name,
+                    contents:c._doc.contents,
+                }]
+            }
+            res.json({chapters:r})
+        }
+        else{
+            res.json({message:"Tutor session has timed out"})
+        }
+    }
+    catch(err){
+        console.log(err)
+        res.json({message:err})
+    }
+}
+async function updateCourse(req,res){
+    try{
+        if(req.session.role==='tutor'){
+            // Delete all
+            console.log(req.body)
+            let chapters = await Chapter.find({courseid:req.body.courseid})
+            for(let chapter of chapters){
+                await Content.deleteMany({chapter:chapter._id})
+            }
+            await Chapter.deleteMany({course:req.body.courseid})
 
+            // Re-update
+            for(let chapter of req.body.chapters){
+                let c1 = new Chapter({
+                    course: req.body.courseid,
+                    name: chapter.name,
+                })
+                let doc = await c1.save()
+                for(let content of chapter.contents){
+                    let c2 = new Content({
+                        content: content,
+                        chapter: doc._id,
+                    })
+                    await c2.save()
+                }
+            }
+            res.json({message:"Course updated"})
+        }
+        else{
+            res.json({message:"Tutor session has timed out"})
+        }
+    }
+    catch(err){
+        console.log(err)
+        res.json({message:err})
+    }
+}
 
 
 module.exports={
@@ -120,4 +188,6 @@ module.exports={
     getUserCouse,
     getHomeCourse,
     registerCourse,
+    getCourseDetail,
+    updateCourse,
 }
