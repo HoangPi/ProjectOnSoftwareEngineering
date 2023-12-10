@@ -46,7 +46,7 @@ export const CourseList = (props) => {
                     </span>
                 </td>
                 <td>
-                    <span class="badge bg-danger">Something</span>
+                    <span class="badge bg-secondary">{props.length ? props.length : 0}</span>
                 </td>
                 <td>
                     <span class="badge bg-danger">Remove?</span>
