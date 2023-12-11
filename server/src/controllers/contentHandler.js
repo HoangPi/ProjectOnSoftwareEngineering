@@ -2,11 +2,9 @@ const Content = require("../models/content.js")
 
 
 
-function getLesson(req, res) {
+function getContent(req, res) {
     const chapterId=req.body.chapterId
-    const partn=req.body.partn
-    console.log("Fetching chapterid",chapterId)
-    Content.findOne({chapter:chapterId,part:partn  })
+    Content.findOne({chapter:chapterId })
       .then(docs => {
         if (!docs) {
           
@@ -15,10 +13,10 @@ function getLesson(req, res) {
         res.status(200).json({ content:docs });
       })
       .catch(error => {
-        console.error("Error fetching lesson:", error);
-        res.status(500).json({ error: "Failed to fetch lesson" });
+        console.error("Error fetching Content:", error);
+        res.status(500).json({ error: "Failed to fetch Content" });
       });
   }
   module.exports = {
-    getLesson,
+    getContent,
 }

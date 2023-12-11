@@ -93,39 +93,43 @@ export const Homepage = () => {
             className="category"
             style={{
               marginLeft: "50px",
-              marginTop: "100px",
-              marginRight: "50px",
-              backgroundColor: "#ececec",
-              padding: "20px",
-              borderRadius: "22px",
-              display: "flex",
-              flexDirection: "column",
+                marginTop: "100px",
+                marginRight: "50px",
+                backgroundColor: "#ececec",
+                padding: "20px",
+                borderRadius: "22px",
+                display: "flex",
+                flexDirection: "column",
             }}
           >
             <h2 style={{ textAlign: "center" }}>{category}</h2>
             <div
+              className="courses-container"
               style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-                gap: "20px",
+                display: "flex",
+                overflowX: "scroll",
+                scrollBehavior: "smooth",
+                paddingBottom: "10px",
               }}
             >
               {coursesByCategory[category].map((value, key) => {
                 const tutor = tutors.find((tutor) => tutor._id === value.tutorid);
                 return (
-                  <div key={key}>
+                  <div
+                    key={key}
+                    style={{ flex: "0 0 auto", marginRight: "10px" }}
+                  >
                     <Courses
-                      courseid={value._id}
-                      thumbnail={value.thumbnail}
-                      coursename={value.coursename}
-                      tutorid={value.tutorid}
-                      tutorname={tutor ? tutor.name : ""}
-                      category={value.category}
-                      level={value.level}
-                      description={value.description}
-                      studentsid={value.studentsid}
-                      userid={user ? user._id : ""}
-                      
+                        courseid={value._id}
+                        thumbnail={value.thumbnail}
+                        coursename={value.coursename}
+                        tutorid={value.tutorid}
+                        tutorname={tutor ? tutor.name : ""}
+                        category={value.category}
+                        level={value.level}
+                        description={value.description}
+                        studentsid={value.studentsid}
+                        userid={user ? user._id : ""}
                     />
                   </div>
                 );
@@ -134,6 +138,28 @@ export const Homepage = () => {
           </div>
         ))
       )}
+  
+      {/* Button to scroll courses horizontally */}
+      <button
+        style={{
+          marginTop: "10px",
+          marginLeft: "50px",
+          marginBottom: "20px",
+        }}
+        onClick={() => {
+          const container = document.querySelector(".courses-container");
+          if (container) {
+            container.scrollBy({
+              left: 200, // Adjust the scroll amount as needed
+              behavior: "smooth",
+            });
+          }
+        }}
+      >
+        Scroll Right
+      </button>
     </div>
   );
 };
+
+

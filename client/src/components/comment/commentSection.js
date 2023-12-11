@@ -34,6 +34,9 @@ export const CommentSection = (props)=> {
         const commentsResponse = await GetComments(lessonId); // Call your existing GetComments function
         const commentsdata= commentsResponse.comments;
         console.log("Fetched comments:", commentsdata);
+        if (!commentsResponse) {
+          throw new Error("Comments response is undefined");
+        }
         const updatedComments = await Promise.all(
             commentsdata.map(async (comment) => {
               const userId = comment.userid;
@@ -50,7 +53,7 @@ export const CommentSection = (props)=> {
         setComments(updatedComments);
     } catch (error) {
         setIsError(true);
-        console.error("Error fetching comments:", error);
+        
     }
     };
     

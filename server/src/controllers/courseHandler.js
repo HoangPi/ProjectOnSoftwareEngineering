@@ -152,6 +152,30 @@ async function getCourseDetail(req,res){
         res.json({message:err})
     }
 }
+
+async function getChapterContents(req, res) {
+    try {
+      if (req.session.role === 'student') {
+        const chapterId = req.body.chapterId;
+  
+        const chapter = await Chapter.findById(chapterId);
+        const contents = await Content.find({ chapter: chapterId });
+  
+        if (contents.length <= 0) {
+          res.json({ name: chapter.name, contents: [] });
+        } else {
+          res.json({ name: chapter.name, contents });
+        }
+      } else {
+        res.json({ message: 'Student session has timed out' });
+      }
+    } catch (err) {
+      console.log(err);
+      res.json({ message: err });
+    }
+  }
+
+
 async function updateCourse(req,res){
     try{
         if(req.session.role==='tutor'){
@@ -198,5 +222,6 @@ module.exports={
     getHomeCourse,
     registerCourse,
     getCourseDetail,
+    getChapterContents,
     updateCourse,
 }

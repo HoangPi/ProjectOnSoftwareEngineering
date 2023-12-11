@@ -24,6 +24,7 @@ const registercourse= require('./routes/userRoutes/registerCourse.js')
 
 const getlesson=require('./routes/userRoutes/getLesson.js')
 const getcomment=require('./routes/userRoutes/getComment.js')
+const getcontent=require('./routes/userRoutes/getContent.js')
 
 const course = require('./routes/tutorRoutes/course.js')
 
@@ -53,7 +54,8 @@ app.use('/getstudent',getstudent)
 app.use('/getcategory',getcategory)
 app.use('/registercourse',registercourse)
 
-app.use('/getlesson',getlesson)
+app.use('/getcontent',getcontent)
+app.use('/getchapter',getlesson)
 app.use('/getcomment',getcomment)
 
 app.use('/tutor',course)

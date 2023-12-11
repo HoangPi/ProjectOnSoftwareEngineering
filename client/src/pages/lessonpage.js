@@ -11,20 +11,23 @@ export const LessonPage =()=>{
     const navigate = useNavigate()
     const [user,setUser] = useState()
     const [role,setRole] = useState()
-    const [content,setContent] = useState()
+    const [contents,setContents] = useState([])
+    
     const [comment, setComment] = useState('');
     const [isError, setIsError] = useState(false);
     // const [courseId,setCourseId] = useState()
     // const [part,setPart] = useState()
     const [name,setName] = useState()
+    const [showAnnouncement, setShowAnnouncement] = useState(false);
+    const [strBtn, setStrBtn] = useState("Next");
+
     const [lessonId,setLessonId] = useState()
     const [alertString,setAlertString]= useState("alert alert-danger")
-    const [message,setMessage] = useState("Sorry, this course does not have content yet! ")
+    const [message,setMessage] = useState("Sorry, this chapter does not have content yet! ")
     const [isLoading,setIsLoading] = useState(true)
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const course = queryParams.get('courseId');
-    const part = queryParams.get('part');
+    const chapter = queryParams.get('chapterId');
     
     useEffect(()=>{
         GetUserSession()
@@ -37,37 +40,46 @@ export const LessonPage =()=>{
                     setUser(response.userinfo)
                     setRole(response.role)
                     setIsLoading(false)
-                    GetLessons(course,part)
+                    GetLessons(chapter)
                             .then(lessonData => {
-                                const lessoninfo = lessonData.lesson
-                                console.log(lessoninfo.courseid)
-                                setContent(lessoninfo.content)
-                                setName(lessoninfo.namelesson)
-                                setLessonId(lessoninfo._id)
+                                setContents(lessonData.contents)
+                                setName(lessonData.name)
+                                console.log("ChapterContentData: ",lessonData.contents);
+                                if (!lessonData.contents){
+                                  setIsError(true);
+                                }
                             }).catch((error) => {
                                 setIsError(true);
-                                if(part!=="0"){
-                                    setAlertString("alert alert-info")
-                                    setMessage("Congrat! You have finished the course.")
-                                }
                                 console.log(error);
                               });
+                    
                 }
             })
     },[])
+
+    const [contentIndex, setContentIndex] = useState(0);
+    const content = contents?.[contentIndex];
+    
+
     const extractVideoId = (url) => {
         const regex = /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/;
         const match = url.match(regex);
         return match ? match[1] : null;}
-    const videoId = content ? extractVideoId(content) : null;
+    const videoId = content ? extractVideoId(content.content.toString()) : null;
 
     const nextLesson = () => {
-        const incrementedPart = String(Number(part) + 1);
-        window.location.href = `/lessonpage?courseId=${course}&part=${incrementedPart}`;
+      if(contentIndex === contents.length - 1){
+        setStrBtn("Go Home");
+        setShowAnnouncement(true);
+      }else
+      setStrBtn("Next");
+      setContentIndex((prevIndex) => prevIndex + 1);
     };
+    
     const previousLesson = () => {
-        const decrementedPart = String(Number(part) - 1);
-        window.location.href = `/lessonpage?courseId=${course}&part=${decrementedPart}`;
+      setStrBtn("Next");
+      setShowAnnouncement(false);
+      setContentIndex((prevIndex) => prevIndex - 1);
     };
     const handleCommentChange = (event) => {
       setComment(event.target.value);
@@ -78,14 +90,15 @@ export const LessonPage =()=>{
         console.log('Adding comment:', comment);
         setComment('');
       }
-      
-  
-      
-      
     };
+    
 
-    const isPreviousButtonDisabled = part === "0";
-    const isNextButtonDisabled = isError;
+    let isNextButtonDisabled = false;
+    if(isError){
+      isNextButtonDisabled = true;
+    }
+    const isPreviousButtonDisabled = contentIndex === 0;
+    
     
     if (isLoading) return <div class="d-flex align-items-center">
         <strong role="status">Loading...</strong>
@@ -135,59 +148,71 @@ export const LessonPage =()=>{
             </div>
           ) : (
             <div class="container">
-                        <div class="row justify-content-center" style={{marginTop:50,backgroundColor:"gray"}}>
+                        
+                        <div class="row justify-content-center" style={{marginTop:50,marginBottom:50,backgroundColor:"gray"}}>
                             <div class="col-md-auto">
                             <h2>{name}</h2>
                             </div>
                         </div>
-                        
-                        <div class="row justify-content-center" style={{marginTop:50}}>
-                            <div class="col-md-auto">
-                                <div className="body-lesson">
-                                    <iframe
-                                        style={{ width: '70vw', height: 'calc(70vw * 0.5625)', maxWidth: '100%' }}
-                                        src={`https://www.youtube.com/embed/${videoId}`}
-                                        title="YouTube video player"
-                                        frameBorder="0"
-                                        allowFullScreen
-                                    ></iframe>
-                                </div>
-                            </div>
+                        {showAnnouncement ? (
+                          <div class="container">
+                          <div class="alert alert-primary" role="alert">
+                          Congratulations! You have finished this chapter lesson.
+                          </div>
                         </div>
+                          
+                        ):(
+                        <>
+                        <div class="row justify-content-center" style={{marginTop:50}}>
+                            <div className="col-md-auto">
+                              <div className="body-lesson">
+                                <iframe
+                                  style={{ width: '70vw', height: 'calc(70vw * 0.5625)', maxWidth: '100%' }}
+                                  src={`https://www.youtube.com/embed/${videoId}`}
+                                  title="YouTube video player"
+                                  frameBorder="0"
+                                  allowFullScreen
+                                ></iframe>
+                              </div>
+                            </div>
+                          </div>
+                          </>
+                          )}
                     </div>
           )}
+
         </div>
       )}
+      <div className="button-group-container" style={{ width: '80%', margin: '50px auto' }}>
+            <div className="btn-group w-100" role="group" aria-label="Button Group" >
+                <button
+                  className="btn btn-secondary w-100 py-2 btn-3d"
+                  style={{
+                    border: "none",
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+                    transform: "translateY(0)",
+                    transition: "transform 0.2s ease-in-out",
+                  }}
+                  disabled={isPreviousButtonDisabled}
+                  onClick={previousLesson}
+                >
+                  Previous
+                </button>
 
-
-        <div className="btn-group w-100" role="group" aria-label="Button Group">
-            <button
-              className="btn btn-secondary w-100 py-2 btn-3d"
-              style={{
-                border: "none",
-                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
-                transform: "translateY(0)",
-                transition: "transform 0.2s ease-in-out",
-              }}
-              disabled={isPreviousButtonDisabled}
-              onClick={previousLesson}
-            >
-              Previous
-            </button>
-
-            <button
-              className="btn btn-primary w-100 py-2 btn-3d"
-              style={{
-                border: "none",
-                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
-                transform: "translateY(0)",
-                transition: "transform 0.2s ease-in-out",
-              }}
-              disabled={isNextButtonDisabled}
-              onClick={nextLesson}
-            >
-              Next
-            </button>
+                <button
+                  className="btn btn-primary w-100 py-2 btn-3d"
+                  style={{
+                    border: "none",
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+                    transform: "translateY(0)",
+                    transition: "transform 0.2s ease-in-out",
+                  }}
+                  disabled={isNextButtonDisabled}
+                  onClick={nextLesson}
+                >
+                  {strBtn}
+                </button>
+              </div>
           </div>
           <section className="gradient-custom">
             <div className="container my-5 py-5">
@@ -224,20 +249,22 @@ export const LessonPage =()=>{
           </section>
 
           <section class="gradient-custom">
-          <div class="container my-5 py-5">
-              <div class="row d-flex justify-content-center">
-                  <div class="col-md-12 col-lg-10 col-xl-8">
-                      <div class="card">
-                          <div class="card-body p-4">
-                              <h4 class="text-center mb-4 pb-2">Nested comments section</h4>
-                              <CommentSection lessonid={lessonId}></CommentSection>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </section>
+            <div class="container my-5 py-5">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-12 col-lg-10 col-xl-8">
+                        <div class="card">
+                            <div class="card-body p-4">
+                                <h4 class="text-center mb-4 pb-2">Nested comments section</h4>
+                                <CommentSection lessonid={lessonId}></CommentSection>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </section>
           
+          
+        
     </div>
     
     )
