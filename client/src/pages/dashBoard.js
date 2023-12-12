@@ -104,8 +104,7 @@ export const DashBoard = () => {
                                             <th></th>
 
                                         </tr>    
-
-                                        </tr>
+                                    
                                     </thead>
                                     {/* {console.log(courseLength)} */}
                                     {courses.map((value, key) => (

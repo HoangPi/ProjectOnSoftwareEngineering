@@ -20,7 +20,7 @@ export const Courses = (props) => {
   const openModal = (event) => {
     
     if (props.page==="dashboard") {
-      navigate(`/lessonpage?courseId=${props.courseid}&part=0`);
+      navigate(`/coursedetail?courseId=${props.courseid}`);
     }else
     setModalVisible(true);
   };

@@ -12,10 +12,6 @@ const lessonSchema= mongoose.Schema({
     content:{
         type:String,
         required:true,
-    },
-    part:{
-        type:String,
-        required:true,
     }
     
 },{timestamps: true});

@@ -11,6 +11,7 @@ export const Homepage = () => {
   const [user, setUser] = useState();
   const [role, setRole] = useState();
   const [avatar, setAvatar]= useState();
+  const [scrollPosition, setScrollPosition] = useState(0);
   const [hasSession, setHasSession] = useState(false);
   const [coursesByCategory, setCoursesByCategory] = useState({});
   const [tutors, setTutors] = useState([]);
@@ -48,9 +49,10 @@ export const Homepage = () => {
         // Group courses by category
         const coursesByCategory = {};
         categories.forEach((category) => {
-          coursesByCategory[category.namecategory] = courses.filter(
+          const coursesForCategory = courses.filter(
             (course) => course.category === category.namecategory
           );
+          coursesByCategory[category.namecategory] = coursesForCategory.slice(0, 3); 
         });
 
         setCoursesByCategory(coursesByCategory);
@@ -93,39 +95,41 @@ export const Homepage = () => {
             className="category"
             style={{
               marginLeft: "50px",
-              marginTop: "100px",
-              marginRight: "50px",
-              backgroundColor: "#ececec",
-              padding: "20px",
-              borderRadius: "22px",
-              display: "flex",
-              flexDirection: "column",
+                marginTop: "100px",
+                marginRight: "50px",
+                backgroundColor: "#ececec",
+                padding: "20px",
+                borderRadius: "22px",
+                display: "flex",
+                flexDirection: "column",
             }}
           >
             <h2 style={{ textAlign: "center" }}>{category}</h2>
             <div
+              className="courses-container"
               style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-                gap: "20px",
+                display: "flex",
+                paddingBottom: "10px",
               }}
             >
               {coursesByCategory[category].map((value, key) => {
                 const tutor = tutors.find((tutor) => tutor._id === value.tutorid);
                 return (
-                  <div key={key}>
+                  <div
+                    key={key}
+                    style={{ flex: "0 0 auto", marginRight: "10px" ,width:"400px" }}
+                  >
                     <Courses
-                      courseid={value._id}
-                      thumbnail={value.thumbnail}
-                      coursename={value.coursename}
-                      tutorid={value.tutorid}
-                      tutorname={tutor ? tutor.name : ""}
-                      category={value.category}
-                      level={value.level}
-                      description={value.description}
-                      studentsid={value.studentsid}
-                      userid={user ? user._id : ""}
-                      
+                        courseid={value._id}
+                        thumbnail={value.thumbnail}
+                        coursename={value.coursename}
+                        tutorid={value.tutorid}
+                        tutorname={tutor ? tutor.name : ""}
+                        category={value.category}
+                        level={value.level}
+                        description={value.description}
+                        studentsid={value.studentsid}
+                        userid={user ? user._id : ""}
                     />
                   </div>
                 );
@@ -137,3 +141,5 @@ export const Homepage = () => {
     </div>
   );
 };
+
+

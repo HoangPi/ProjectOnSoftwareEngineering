@@ -15,6 +15,7 @@ import { TestPage } from './pages/test.js';
 import { AddCourse } from './pages/addcourse.js';
 import { LessonPage } from './pages/lessonpage.js';
 import { SortedHome } from './pages/sortedhome.js';
+import { CourseDetail} from './pages/coursedetail.js';
 import LessonEditor from './pages/lesson_editor.js'
 
 
@@ -62,6 +63,8 @@ function App() {
           <Route path='/addcourse' element={<AddCourse></AddCourse>}></Route>
           <Route path='/lessonEditor' element={<LessonEditor></LessonEditor>}></Route>
           <Route path='/lessonpage' element={<LessonPage></LessonPage>}></Route>
+          <Route path='/coursedetail' element={<CourseDetail></CourseDetail>}></Route>
+          
         </Routes>
       </Router>
       {/* </div> */}

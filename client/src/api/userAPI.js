@@ -50,14 +50,14 @@ export const RegisterCourse = async (userid,courseid)=>{
 }
 
 
-export const GetLessons = async (courseIdlesson,partlesson)=>{
+export const GetLessons = async (chapterId)=>{
   try {
-      const response = await fetch('/getlesson', {
+      const response = await fetch('/getcontent', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ courseIdlesson,partlesson})
+        body: JSON.stringify({ chapterId})
       });
       const data = await response.json();
       return data
@@ -67,14 +67,14 @@ export const GetLessons = async (courseIdlesson,partlesson)=>{
     }
 }
 
-export const GetComments = async (lessonid)=>{
+export const GetComments = async (chapterid)=>{
   try {
       const response = await fetch('/getcomment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ lessonid})
+        body: JSON.stringify({ chapterid})
       });
       const data = await response.json();
       return data
@@ -84,14 +84,129 @@ export const GetComments = async (lessonid)=>{
     }
 }
 
-export const AddComment = async (content,userid,lessonid)=>{
+export const AddComment = async (content,userid,chapterid)=>{
   try {
       const response = await fetch('/getcomment/addcomment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ content,userid,lessonid})
+        body: JSON.stringify({ content,userid,chapterid})
+      });
+      const data = await response.json();
+      return data
+    }
+    catch (error) {
+      return { message: 'Fail' };
+    }
+}
+export const GetReply = async (commentid)=>{
+  try {
+      const response = await fetch('/getcomment/getreply', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ commentid})
+      });
+      const data = await response.json();
+      return data
+    }
+    catch (error) {
+      return { message: 'Fail' };
+    }
+}
+export const AddReply = async (content,userid,commentid)=>{
+  try {
+      const response = await fetch('/getcomment/addreply', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ content,userid,commentid})
+      });
+      const data = await response.json();
+      return data
+    }
+    catch (error) {
+      return { message: 'Fail' };
+    }
+}
+export const EditReply = async (replyId,content)=>{
+  try {
+      const response = await fetch('/getcomment/editreply', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ replyId,content})
+      });
+      const data = await response.json();
+      return data
+    }
+    catch (error) {
+      return { message: 'Fail' };
+    }
+}
+export const DeleteReply = async (replyId)=>{
+  try {
+      const response = await fetch('/getcomment/deletereply', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ replyId})
+      });
+      const data = await response.json();
+      return data
+    }
+    catch (error) {
+      return { message: 'Fail' };
+    }
+}
+export const EditComment = async (commentId,content)=>{
+  try {
+      const response = await fetch('/getcomment/editcomment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ commentId,content})
+      });
+      const data = await response.json();
+      return data
+    }
+    catch (error) {
+      return { message: 'Fail' };
+    }
+}
+export const DeleteComment = async (commentId)=>{
+  try {
+      const response = await fetch('/getcomment/deletecomment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ commentId})
+      });
+      const data = await response.json();
+      return data
+    }
+    catch (error) {
+      return { message: 'Fail' };
+    }
+}
+
+
+
+export const GetChapters = async (courseId)=>{
+  try {
+      const response = await fetch('/getusercourse/getchapters', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ courseId})
       });
       const data = await response.json();
       return data
