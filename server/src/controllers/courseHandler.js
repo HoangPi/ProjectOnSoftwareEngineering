@@ -80,7 +80,7 @@ function getHomeCourse(req,res){
             res.status(500).json({ error: "Failed to fetch courses" });
           });
 }
-function getChapter(req,res){
+function getDetai(req,res){
     Teach.find({})
         .then(docs=>{
             res.status(200).json({courses:docs})
@@ -162,9 +162,9 @@ async function getChapterContents(req, res) {
         const contents = await Content.find({ chapter: chapterId });
   
         if (contents.length <= 0) {
-          res.json({ name: chapter.name, contents: [] });
+          res.json({ chapter: chapter, contents: [] });
         } else {
-          res.json({ name: chapter.name, contents });
+          res.json({ chapter: chapter, contents });
         }
       } else {
         res.json({ message: 'Student session has timed out' });

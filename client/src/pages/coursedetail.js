@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { NavigationBar } from "../components/NavBar.js";
 
 import { GetChapters} from "../api/userAPI.js";
-import { Courses } from "../model/courses";
 import { useLocation } from 'react-router-dom';
 
 
@@ -16,10 +15,11 @@ export const CourseDetail = () => {
   const [role, setRole] = useState();
   const [hasSession, setHasSession] = useState(false);
 
-
   const [chaptersInfo, setChaptersInfo] = useState([]);
+  const [courseInfo, setCourseInfo] = useState([]);
+
   const [avatar, setAvatar]= useState();
-  const [isError, setIsError] = useState(false);
+  
   const [isLoading, setIsLoading] = useState(true); // Loading state
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -37,13 +37,13 @@ export const CourseDetail = () => {
                 setAvatar(respone.userinfo.avatar)
                 GetChapters(course)
                   .then((chaptersData) => {
-                    const chapters = chaptersData.chapters;
                     console.log(chaptersData.chapters);
+                    console.log(chaptersData.course);
                     setChaptersInfo(chaptersData.chapters);
+                    setCourseInfo(chaptersData.course);
                     setIsLoading(false);
                   })
                   .catch((error) => {
-                    setIsError(true);
                     console.log(error);
                   });
             }
@@ -67,14 +67,45 @@ export const CourseDetail = () => {
       ) : (
         <NavigationBar user={user} role={role} avatar = {avatar}> </NavigationBar>
       )}
-
+      <nav aria-label="breadcrumb" style={{ marginLeft: 85 , textDecoration:"none",color:"inherit"}}>
+        <style>
+            {`
+            a {color: inherit;text-decoration: none;}
+            a:hover {text-decoration: none;background-color:#daf0ff;border-radius:30px}
+            `}
+        </style>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="/">Home</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="/dashboard">DashBoard</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            {courseInfo.coursename}
+          </li>
+        </ol>
+      </nav>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+          <div class="card text-center" style={{width:"80%"}}>
+            <div class="card-header">
+              {courseInfo.coursename}
+            </div>
+            <div class="card-body">
+              <img className="image-course" src={courseInfo.thumbnail} style={{width: '100%', maxHeight: '250px', objectFit: 'cover' ,objectPosition: 'center'}}></img>
+            </div>
+            <div class="card-footer text-body-secondary">
+              Chapters
+            </div>
+          </div>
+        </div>
       {isLoading ? ( // Render loading message if still loading
         <div class="d-flex align-items-center" style={{marginTop:"100px",marginLeft:"50px", marginRight:"100px"}}>
         <strong role="status">Loading...</strong>
         <div class="spinner-border ms-auto" aria-hidden="true"></div>
     </div>
       ) : (
-        <div className="list-group" style={{marginLeft:"50px"}}>
+        <div className="list-group" style={{marginLeft:"50px",marginBottom:'100px'}}>
         {Array.isArray(chaptersInfo) && chaptersInfo.length > 0 ? (
           chaptersInfo.map((value, key) => (
             <a href={`/lessonpage?chapterId=${value._id}`} className="list-group-item list-group-item-action" key={key}>

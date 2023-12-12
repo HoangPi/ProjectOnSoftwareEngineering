@@ -9,7 +9,7 @@ const commentSchema= mongoose.Schema({
         type: String,
         required: true,
     },
-    lessonid:{
+    chapterid:{
         type:String,
         required:true,
     },

@@ -11,6 +11,7 @@ export const Homepage = () => {
   const [user, setUser] = useState();
   const [role, setRole] = useState();
   const [avatar, setAvatar]= useState();
+  const [scrollPosition, setScrollPosition] = useState(0);
   const [hasSession, setHasSession] = useState(false);
   const [coursesByCategory, setCoursesByCategory] = useState({});
   const [tutors, setTutors] = useState([]);
@@ -48,9 +49,10 @@ export const Homepage = () => {
         // Group courses by category
         const coursesByCategory = {};
         categories.forEach((category) => {
-          coursesByCategory[category.namecategory] = courses.filter(
+          const coursesForCategory = courses.filter(
             (course) => course.category === category.namecategory
           );
+          coursesByCategory[category.namecategory] = coursesForCategory.slice(0, 3); 
         });
 
         setCoursesByCategory(coursesByCategory);
@@ -107,8 +109,6 @@ export const Homepage = () => {
               className="courses-container"
               style={{
                 display: "flex",
-                overflowX: "scroll",
-                scrollBehavior: "smooth",
                 paddingBottom: "10px",
               }}
             >
@@ -117,7 +117,7 @@ export const Homepage = () => {
                 return (
                   <div
                     key={key}
-                    style={{ flex: "0 0 auto", marginRight: "10px" }}
+                    style={{ flex: "0 0 auto", marginRight: "10px" ,width:"400px" }}
                   >
                     <Courses
                         courseid={value._id}
@@ -138,26 +138,6 @@ export const Homepage = () => {
           </div>
         ))
       )}
-  
-      {/* Button to scroll courses horizontally */}
-      <button
-        style={{
-          marginTop: "10px",
-          marginLeft: "50px",
-          marginBottom: "20px",
-        }}
-        onClick={() => {
-          const container = document.querySelector(".courses-container");
-          if (container) {
-            container.scrollBy({
-              left: 200, // Adjust the scroll amount as needed
-              behavior: "smooth",
-            });
-          }
-        }}
-      >
-        Scroll Right
-      </button>
     </div>
   );
 };

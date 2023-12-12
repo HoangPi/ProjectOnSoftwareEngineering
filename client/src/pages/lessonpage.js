@@ -11,17 +11,22 @@ export const LessonPage =()=>{
     const navigate = useNavigate()
     const [user,setUser] = useState()
     const [role,setRole] = useState()
+
     const [contents,setContents] = useState([])
+    const [seed, setSeed] = useState(1);
+    const [chapterInfo,setChapterInfo]= useState([])
     
-    const [comment, setComment] = useState('');
+    const [comment, setComment] = useState('')
+    const [showComments,setShowComments] = useState(true)
+    const [commentCount, setCommentCount] = useState(0);
     const [isError, setIsError] = useState(false);
     // const [courseId,setCourseId] = useState()
     // const [part,setPart] = useState()
-    const [name,setName] = useState()
+
     const [showAnnouncement, setShowAnnouncement] = useState(false);
     const [strBtn, setStrBtn] = useState("Next");
+    
 
-    const [lessonId,setLessonId] = useState()
     const [alertString,setAlertString]= useState("alert alert-danger")
     const [message,setMessage] = useState("Sorry, this chapter does not have content yet! ")
     const [isLoading,setIsLoading] = useState(true)
@@ -43,13 +48,15 @@ export const LessonPage =()=>{
                     GetLessons(chapter)
                             .then(lessonData => {
                                 setContents(lessonData.contents)
-                                setName(lessonData.name)
+                                setChapterInfo(lessonData.chapter)
                                 console.log("ChapterContentData: ",lessonData.contents);
+                                console.log("ChapterInfo: ",lessonData.chapter);
                                 if (!lessonData.contents){
                                   setIsError(true);
                                 }
                             }).catch((error) => {
                                 setIsError(true);
+                                setShowComments(false);
                                 console.log(error);
                               });
                     
@@ -71,6 +78,8 @@ export const LessonPage =()=>{
       if(contentIndex === contents.length - 1){
         setStrBtn("Go Home");
         setShowAnnouncement(true);
+      }else if (showAnnouncement){
+        navigate(`/coursedetail?courseId=${chapterInfo.course}`);
       }else
       setStrBtn("Next");
       setContentIndex((prevIndex) => prevIndex + 1);
@@ -85,33 +94,29 @@ export const LessonPage =()=>{
       setComment(event.target.value);
     };
     const addComment = () => {
-      if(comment!==''){
-        AddComment(comment,user._id,lessonId);
-        console.log('Adding comment:', comment);
+      if (comment !== "") {
+        AddComment(comment, user._id, chapter);
         setComment('');
+        setCommentCount((prevCount) => prevCount + 1); // Increment comment count
       }
     };
+    const reset = () => {
+      setSeed(Math.random());
+  }
     
-
     let isNextButtonDisabled = false;
     if(isError){
       isNextButtonDisabled = true;
     }
     const isPreviousButtonDisabled = contentIndex === 0;
-    
-    
     if (isLoading) return <div class="d-flex align-items-center">
         <strong role="status">Loading...</strong>
         <div class="spinner-border ms-auto" aria-hidden="true"></div>
     </div>
-
-    
-
     return(
         <div>
       <NavigationBar avatar={user?.avatar} user={user} role={role}></NavigationBar>
       <MiniHeader avatar={user?.avatar} name={user?.name} role={role}></MiniHeader>
-      
       <nav aria-label="breadcrumb" style={{ marginLeft: 85 , textDecoration:"none",color:"inherit"}}>
         <style>
             {`
@@ -127,7 +132,7 @@ export const LessonPage =()=>{
             <a href="/dashboard">DashBoard</a>
           </li>
           <li class="breadcrumb-item active" aria-current="page">
-            {name}
+            {chapterInfo.name}
           </li>
         </ol>
       </nav>
@@ -148,10 +153,9 @@ export const LessonPage =()=>{
             </div>
           ) : (
             <div class="container">
-                        
                         <div class="row justify-content-center" style={{marginTop:50,marginBottom:50,backgroundColor:"gray"}}>
                             <div class="col-md-auto">
-                            <h2>{name}</h2>
+                            <h2>{chapterInfo.name}</h2>
                             </div>
                         </div>
                         {showAnnouncement ? (
@@ -160,7 +164,6 @@ export const LessonPage =()=>{
                           Congratulations! You have finished this chapter lesson.
                           </div>
                         </div>
-                          
                         ):(
                         <>
                         <div class="row justify-content-center" style={{marginTop:50}}>
@@ -180,7 +183,6 @@ export const LessonPage =()=>{
                           )}
                     </div>
           )}
-
         </div>
       )}
       <div className="button-group-container" style={{ width: '80%', margin: '50px auto' }}>
@@ -247,28 +249,23 @@ export const LessonPage =()=>{
               </div>
             </div>
           </section>
-
+          
           <section class="gradient-custom">
             <div class="container my-5 py-5">
+              {showComments && (
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-12 col-lg-10 col-xl-8">
                         <div class="card">
                             <div class="card-body p-4">
-                                <h4 class="text-center mb-4 pb-2">Nested comments section</h4>
-                                <CommentSection lessonid={lessonId}></CommentSection>
+                                <h4 class="text-center mb-4 pb-2">Chapter Discussion</h4>
+                                <CommentSection chapterid={chapter} userinfo = {user} key={seed}> </CommentSection>
                             </div>
                         </div>
                     </div>
                 </div>
+              )}
             </div>
           </section>
-          
-          
-        
     </div>
-    
     )
-                
-
-
 }
