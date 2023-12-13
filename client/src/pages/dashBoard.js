@@ -23,6 +23,8 @@ export const DashBoard = () => {
             .then((response) => {
                 if (typeof (response.userinfo) === 'undefined' || response.userinfo === null) {
                     navigate('/')
+                }else if (response.role === 'admin'){
+                    navigate('/admin/dashboard')
                 }
                 else {
                     if (response.role === 'tutor') {
@@ -70,7 +72,7 @@ export const DashBoard = () => {
         <div>
 
             <NavigationBar user={user} role={role}avatar = {avatar}></NavigationBar>
-            <MiniHeader avatar={user.avatar} name={user.name} role = {role}></MiniHeader>
+            <MiniHeader avatar={user.avatar} name={user.name} role = {role} page="dashboard"></MiniHeader>
             <nav aria-label="breadcrumb" style={{marginLeft:85}}>
                 <style>
                     {`

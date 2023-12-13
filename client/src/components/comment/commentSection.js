@@ -68,9 +68,11 @@ export const CommentSection = (props) => {
             if (user) {
               comment.username = user.name;
               comment.useravatar = user.avatar;
+              comment.role = user.role;
+
             }
         
-            comment.time = calculateTimeDifference(comment.createdAt, comment.updatedAt);
+            comment.time = calculateTimeDifference(comment.updatedAt, comment.createdAt);
         
             // Update replies for the comment
             const updatedReplies = await Promise.all(
@@ -80,8 +82,9 @@ export const CommentSection = (props) => {
                 if (replyUser) {
                   reply.username = replyUser.name;
                   reply.useravatar = replyUser.avatar;
+                  reply.role = replyUser.role;
                 }
-                reply.time = calculateTimeDifference(reply.createdAt, reply.updatedAt);
+                reply.time = calculateTimeDifference(reply.updatedAt, reply.createdAt);
                 return reply;
               })
             );
@@ -107,17 +110,24 @@ export const CommentSection = (props) => {
 
     fetchData();
   }, [props.chapterid]);
-  const FindUserById = async (tutorslist,studentslist,userid) => {
-    try {
-        const tutor = tutorslist.find((tutor) => tutor._id.toString() === userid);
-        const student = studentslist.find((student) => student._id.toString() === userid);
-      return student || tutor
-    } catch (error) {
-      // Handle errors
-      console.error(error);
-      return null;
+  const FindUserById = async (tutorslist, studentslist, userid) => {
+  try {
+    const tutor = tutorslist.find((tutor) => tutor._id.toString() === userid);
+    const student = studentslist.find((student) => student._id.toString() === userid);
+    if (tutor) {
+      tutor.role = 'tutor';
+      return tutor;
     }
-  }; 
+    if (student) {
+      student.role = 'student';
+      return student;
+    }
+    return null; 
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
 
 
   const handleCommentSubmit = () => {
@@ -242,7 +252,7 @@ export const CommentSection = (props) => {
                     />
                     <div className="flex-grow-1 flex-shrink-1">
                       <div className="d-flex justify-content-between align-items-center">
-                        <p className="mb-1">
+                        <p className={`mb-1 ${comment.role === 'tutor' ? 'text-primary' : ''}`}>
                           {comment.username} <span className="small">- {comment.time}</span>
                         </p>
                         

@@ -40,7 +40,9 @@ export const LessonPage =()=>{
                 console.log(response);
                 if(typeof(response.userinfo)==='undefined' || response.userinfo===null){
                     navigate('/')
-                }
+                }else if (response.role === 'admin'){
+                  navigate('/admin/dashboard')
+              }
                 else{
                     setUser(response.userinfo)
                     setRole(response.role)

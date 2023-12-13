@@ -16,6 +16,7 @@ import { AddCourse } from './pages/addcourse.js';
 import { LessonPage } from './pages/lessonpage.js';
 import { SortedHome } from './pages/sortedhome.js';
 import { CourseDetail} from './pages/coursedetail.js';
+import { AdminPage} from './pages/adminDashBoard.js';
 import LessonEditor from './pages/lesson_editor.js'
 
 
@@ -64,6 +65,7 @@ function App() {
           <Route path='/lessonEditor' element={<LessonEditor></LessonEditor>}></Route>
           <Route path='/lessonpage' element={<LessonPage></LessonPage>}></Route>
           <Route path='/coursedetail' element={<CourseDetail></CourseDetail>}></Route>
+          <Route path='/admin/dashboard' element={<AdminPage></AdminPage>}></Route>
           
         </Routes>
       </Router>

@@ -33,7 +33,10 @@ export const SortedHome = () => {
     GetUserSession()
         .then(respone => {
             // console.log(respone)
-            if (respone.userinfo !== null && typeof (respone.userinfo) !== 'undefined') {
+            if (respone.role==='admin'){
+                navigate('/admin/dashboard')
+            }
+            else if (respone.userinfo !== null && typeof (respone.userinfo) !== 'undefined') {
                 // console.log(respone.userinfo)
                 setUser(respone.userinfo)
                 setRole(respone.role)

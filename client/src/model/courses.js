@@ -19,7 +19,7 @@ export const Courses = (props) => {
   
   const openModal = (event) => {
     
-    if (props.page==="dashboard") {
+    if (props.page==="dashboard"||props.userrole==="tutor") {
       navigate(`/coursedetail?courseId=${props.courseid}`);
     }else
     setModalVisible(true);
