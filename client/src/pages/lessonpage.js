@@ -100,6 +100,7 @@ export const LessonPage =()=>{
         AddComment(comment, user._id, chapter);
         setComment('');
         setCommentCount((prevCount) => prevCount + 1); // Increment comment count
+        window.location.reload();
       }
     };
     const reset = () => {

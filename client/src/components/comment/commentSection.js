@@ -137,6 +137,7 @@ export const CommentSection = (props) => {
     setEditedCommentIndex(-1); 
     setEditedCommentContent(""); 
     setShowReplyForm(false);
+    window.location.reload();
   };
 
   const handleDeleteComment = () => {
@@ -145,7 +146,8 @@ export const CommentSection = (props) => {
       console.log("Reply deleting:", editedCommentId);
       DeleteComment(editedCommentId);
       setEditedCommentIndex(-1); 
-      setEditedCommentContent(""); 
+      setEditedCommentContent("");
+      window.location.reload(); 
     }
     setShowReplyForm(false);
   };

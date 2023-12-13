@@ -69,12 +69,7 @@ export const SignInPage = () => {
                             transform: 'translateY(0)',
                             transition: 'transform 0.2s ease-in-out',
                         }}>Sign up</button>
-                        <button onClick={handleForgot} className="btn btn-light w-100 py-2 btn-3d" style={{
-                            border: 'none',
-                            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-                            transform: 'translateY(0)',
-                            transition: 'transform 0.2s ease-in-out',
-                        }}>Forgot password</button>
+                        
                     </div>
                     <p class="mt-5 mb-3 text-body-secondary">© 2017–2023</p>
                 </form>

@@ -117,7 +117,7 @@ export const Signup = () => {
             </div>
             <div class="input-group mb-3">
                 <input type="email" class="form-control" id="floatingInput4" placeholder="Email" onChange={handelEmailOnChange} />
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Send OTP</button>
+                
             </div>
             <div class="input-group mb-3">
                 <input onChange={handleUploadFile} type="file" class="form-control" id="inputGroupFile02" />
