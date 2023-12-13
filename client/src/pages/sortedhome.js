@@ -121,7 +121,7 @@ export const SortedHome = () => {
       )}
       <div className="customize-sort" style={{
               marginLeft: "50px",
-              marginTop: "50px",
+              marginTop: "150px",
               marginRight: "50px",
               backgroundColor: "#ececec",
               padding: "20px",
