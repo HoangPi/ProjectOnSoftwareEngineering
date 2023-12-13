@@ -78,36 +78,46 @@ export const AdminPage = () => {
   };
 
   return (
-    <div className="Homepage"style={{ marginLeft: "50px", marginTop:"100px",marginRight: "50px"}}>
-        <h1>List of Accounts</h1>
+    <div className="Homepage" style={{ marginLeft: "50px", marginTop: "100px", marginRight: "50px" }}>
+      <h1>List of Accounts</h1>
       {isLoading ? (
         <div
-          class="d-flex align-items-center"
+          className="d-flex align-items-center"
           style={{ marginTop: "100px", marginLeft: "50px", marginRight: "100px" }}
         >
           <strong role="status">Loading...</strong>
-          <div class="spinner-border ms-auto" aria-hidden="true"></div>
+          <div className="spinner-border ms-auto" aria-hidden="true"></div>
         </div>
       ) : (
-        
-        <div className="list-group" style={{  marginBottom: "100px" ,marginTop:"100px"}}>
+        <div className="list-group" style={{ marginBottom: "100px", marginTop: "100px" }}>
           {Array.isArray(accountsData) && accountsData.length > 0 ? (
             accountsData.map((value, key) => (
-                <div className="account" key={key}>
-                    <div className="list-item-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <a className="list-group-item list-group-item-action" key={key}>
-                             {value.name} - {value.role}
-                        </a>
-                        {/* <button type="button" className="btn btn-danger">Delete</button> */}
-                    </div>
+              <div className="account" key={key}>
+                <div
+                  className="list-item-container"
+                  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                >
+                  <a className="list-group-item list-group-item-action" key={key}>
+                    {value.name} - {value.role}
+                  </a>
+                  {/* <button type="button" className="btn btn-danger">Delete</button> */}
                 </div>
-              
+              </div>
             ))
           ) : (
             <p>No accounts available</p>
           )}
         </div>
       )}
+
+      <button
+        type="button"
+        className="btn btn-primary"
+        style={{ position: "fixed", bottom: "50px", left: "50%", transform: "translateX(-50%)" }}
+        onClick={handleSignOut}
+      >
+        Logout
+      </button>
     </div>
   );
 };
