@@ -40,7 +40,9 @@ export const LessonPage =()=>{
                 console.log(response);
                 if(typeof(response.userinfo)==='undefined' || response.userinfo===null){
                     navigate('/')
-                }
+                }else if (response.role === 'admin'){
+                  navigate('/admin/dashboard')
+              }
                 else{
                     setUser(response.userinfo)
                     setRole(response.role)
@@ -98,6 +100,7 @@ export const LessonPage =()=>{
         AddComment(comment, user._id, chapter);
         setComment('');
         setCommentCount((prevCount) => prevCount + 1); // Increment comment count
+        window.location.reload();
       }
     };
     const reset = () => {

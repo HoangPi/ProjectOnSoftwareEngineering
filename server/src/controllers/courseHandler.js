@@ -125,6 +125,7 @@ function registerCourse(req, res) {
 async function getCourseDetail(req,res){
     try{
         if(req.session.role==='tutor'){
+            const course = await Teach.find({_id:req.body.courseid})
             const chapters = await Chapter.find({course:req.body.courseid})
             for(let i in chapters){
                 let temp = await Content.find({chapter:chapters[i]._id})
@@ -141,7 +142,7 @@ async function getCourseDetail(req,res){
                     contents:c._doc.contents,
                 }]
             }
-            res.json({chapters:r})
+            res.json({course:course,chapters:r})
         }
         else{
             res.json({message:"Tutor session has timed out"})
@@ -155,7 +156,7 @@ async function getCourseDetail(req,res){
 
 async function getChapterContents(req, res) {
     try {
-      if (req.session.role === 'student') {
+      if (req.session.role !== 'undefined') {
         const chapterId = req.body.chapterId;
   
         const chapter = await Chapter.findById(chapterId);
@@ -167,7 +168,7 @@ async function getChapterContents(req, res) {
           res.json({ chapter: chapter, contents });
         }
       } else {
-        res.json({ message: 'Student session has timed out' });
+        res.json({ message: 'Student or tutor session has timed out' });
       }
     } catch (err) {
       console.log(err);

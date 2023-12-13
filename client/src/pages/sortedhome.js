@@ -33,7 +33,10 @@ export const SortedHome = () => {
     GetUserSession()
         .then(respone => {
             // console.log(respone)
-            if (respone.userinfo !== null && typeof (respone.userinfo) !== 'undefined') {
+            if (respone.role==='admin'){
+                navigate('/admin/dashboard')
+            }
+            else if (respone.userinfo !== null && typeof (respone.userinfo) !== 'undefined') {
                 // console.log(respone.userinfo)
                 setUser(respone.userinfo)
                 setRole(respone.role)
@@ -118,7 +121,7 @@ export const SortedHome = () => {
       )}
       <div className="customize-sort" style={{
               marginLeft: "50px",
-              marginTop: "50px",
+              marginTop: "150px",
               marginRight: "50px",
               backgroundColor: "#ececec",
               padding: "20px",

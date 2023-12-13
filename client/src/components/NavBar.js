@@ -54,7 +54,9 @@ export const NavigationBar = (props) => {
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="/home">Home</a>
                             </li>
-                            
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/courses">Courses</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Account
@@ -69,9 +71,7 @@ export const NavigationBar = (props) => {
                                     
                                 </ul>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="/courses">Courses</a>
-                            </li>
+                            
                         </ul>
                         <form className="d-flex mt-3" role="search">
                             <input

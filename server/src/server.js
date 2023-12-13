@@ -26,6 +26,8 @@ const getlesson=require('./routes/userRoutes/getLesson.js')
 const getcomment=require('./routes/userRoutes/getComment.js')
 const getcontent=require('./routes/userRoutes/getContent.js')
 
+const getaccounts=require('./routes/adminRoutes/getAccounts.js')
+
 const course = require('./routes/tutorRoutes/course.js')
 
 
@@ -60,6 +62,7 @@ app.use('/getcomment',getcomment)
 
 app.use('/tutor',course)
 
+app.use('/admin/getaccount',getaccounts)
 
 // app.listen(port,() => {console.log("Server is running on port 5000")})
 mongoose.connect(databseURI)

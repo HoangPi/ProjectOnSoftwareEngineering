@@ -170,6 +170,10 @@ function signIn(req,res){
                             }
                             else res.status(405).json({signin:false})
                         })
+                }else if(result._doc.role==='3'){
+                    req.session.userinfo='admin'
+                    req.session.role='admin'
+                    res.status(200).json({signin:true})
                 }
                 else res.status(405).json({signin:false})
             }
@@ -214,8 +218,28 @@ function updateProfile(req,res){
 
     // res.status(200).json({message:"Test"})
 }
+function getAccounts(req,res){
+    // console.log(req.session)
+    if(req.session.role!=="admin"){
+        res.json({confirm:false})
+    }
+    else{
+        Account.find({})
+        .then(accounts => {
+            res.status(200).json({ accounts });
+        })
+        .catch(error => {
+            console.error("Error fetching account:", error);
+            res.status(500).json({ error: "Failed to fetch accounts" });
+        });
+    }
+
+    // res.status(200).json({message:"Test"})
+}
+
 module.exports = {
     createAccount,
     signIn,
     updateProfile,
+    getAccounts,
 }

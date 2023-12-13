@@ -38,10 +38,12 @@ export const ReplySection = (props) => {
       EditReply(editedReplyId,editedReplyContent);
       setEditedReplyIndex(-1); 
       setEditedReplyContent(""); 
+      window.location.reload();
     } else {
       console.log("Reply submitted:", replyContent);
       AddReply(replyContent, props.userreply._id, props.commentid);
       setReplyContent("");
+      window.location.reload();
     }
     reset();
     setShowReplyForm(false);
@@ -54,6 +56,7 @@ export const ReplySection = (props) => {
       DeleteReply(editedReplyId);
       setEditedReplyIndex(-1); 
       setEditedReplyContent(""); 
+      window.location.reload();
     }
     reset();
     setShowReplyForm(false);
@@ -196,7 +199,7 @@ export const ReplySection = (props) => {
                 </a>
                 <div class="flex-grow-1 flex-shrink-1">
                   <div class="d-flex justify-content-between align-items-center">
-                    <p class="mb-1">
+                    <p class={`mb-1 ${reply.role === 'tutor' ? 'text-primary' : ''}`}>
                       {reply.username}<span class="small"> - {reply.time}</span>
                     </p>
                     {props.userreply._id === reply.userid && (

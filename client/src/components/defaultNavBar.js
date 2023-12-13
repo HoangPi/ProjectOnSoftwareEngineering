@@ -22,14 +22,15 @@ export const DefaultNavBar = ()=>{
                                 <a class="nav-link active" aria-current="page" href="#">Home</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/courses">Courses</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="/signin">Sign in</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="/signup">Sign up</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="/courses">Courses</a>
-                            </li>
+                            
                         </ul>
                     </div>
                 </div>
